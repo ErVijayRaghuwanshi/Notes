@@ -1,0 +1,140 @@
+Below is a Python simulation of your ESP8266 + DHT11 sketch.
+It mimics:
+
+WiFi connection (simulated)
+
+DHT temperature & humidity readings (simulated or optional real sensor)
+
+HTTP server on port 8663
+
+/metrics endpoint returning Prometheus-style metrics
+
+/ root endpoint
+
+
+This is meant to run on a PC or Raspberry Pi, not on Arduino hardware.
+
+
+---
+
+Python Simulation Code (Flask-based)
+
+Requirements
+
+pip install flask
+
+
+---
+
+dht_web_server.py
+
+from flask import Flask, Response
+import random
+import time
+
+app = Flask(__name__)
+
+# --- Simulated DHT11 sensor ---
+class DHT11Sim:
+    def read_temperature(self):
+        # Simulate temperature between 20–35°C
+        return round(random.uniform(20.0, 35.0), 1)
+
+    def read_humidity(self):
+        # Simulate humidity between 30–80%
+        return round(random.uniform(30.0, 80.0), 1)
+
+dht = DHT11Sim()
+
+# --- Routes ---
+@app.route("/", methods=["GET"])
+def root():
+    return "Get all data at /metrics\n", 200
+
+@app.route("/metrics", methods=["GET"])
+def metrics():
+    temperature = dht.read_temperature()
+    humidity = dht.read_humidity()
+
+    metrics_text = (
+        f"dhtexp_temperature {temperature}\n"
+        f"dhtexp_humidity {humidity}\n"
+    )
+
+    return Response(metrics_text, mimetype="text/plain")
+
+# --- Main ---
+if __name__ == "__main__":
+    print("Connecting to WiFi... (simulated)")
+    time.sleep(1)
+    print("Connected to WIFISSID")
+    print("IP address: 127.0.0.1")
+    print("HTTP server started on port 8663")
+
+    app.run(host="0.0.0.0", port=8663)
+
+
+---
+
+Example Output
+
+Browser
+
+http://localhost:8663/
+→ Get all data at /metrics
+
+http://localhost:8663/metrics
+→
+dhtexp_temperature 27.4
+dhtexp_humidity 61.2
+
+
+---
+
+Optional: Real DHT11 on Raspberry Pi
+
+If you want real sensor readings, replace DHT11Sim with:
+
+import Adafruit_DHT
+
+DHT_SENSOR = Adafruit_DHT.DHT11
+DHT_PIN = 4  # GPIO pin
+
+class DHT11Real:
+    def read_temperature(self):
+        humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
+        return temperature if temperature else 0.0
+
+    def read_humidity(self):
+        humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
+        return humidity if humidity else 0.0
+
+
+---
+
+Mapping Arduino → Python
+
+Arduino ESP8266	Python Simulation
+
+ESP8266WebServer	Flask
+/metrics	/metrics
+DHT11	Simulated or Adafruit_DHT
+server.send()	Flask Response
+loop()	Flask event loop
+
+
+
+---
+
+If you want:
+
+Prometheus-ready formatting
+
+Async server
+
+Docker version
+
+ESP8266-accurate timing behavior
+
+
+just tell me 👍
