@@ -183,8 +183,22 @@ col1 = st.columns([1])[0]
 
 with col1:
     st.subheader("Raw SQL Query")
-    default_query = "SELECT MOBILENUMBER, DATE, MIN(TRANSACTIONSTARTTIME) AS FirstSeenStartTime, MAX(TRANSACTIONSTARTTIME) AS LastSeenStartTime, 'SMS' as BehaviourMetricKey, count (distinct case when PROTOCOL = 'SMS' then TRANSACTIONSTARTTIME end) as BehaviourMetricValue, count (distinct case when PROTOCOL = 'VOICE' then TRANSACTIONSTARTTIME end) as VOICE_count from $MASS where DATE in ($DATE) group by MOBILENUMBER, DATE having BehaviourMetricValue >= 1 AND VOICE_count = 0"
-    
+    default_query = """SELECT
+  MOBILENUMBER,
+  DATE,
+  MIN(TRANSACTIONSTARTTIME) AS FirstSeenStartTime,
+  MAX(TRANSACTIONSTARTTIME) AS LastSeenStartTime,
+  'SMS' AS BehaviourMetricKey,
+  COUNT(DISTINCT CASE WHEN PROTOCOL = 'SMS' THEN TRANSACTIONSTARTTIME END) AS BehaviourMetricValue,
+  COUNT(DISTINCT CASE WHEN PROTOCOL = 'VOICE' THEN TRANSACTIONSTARTTIME END) AS VOICE_count
+FROM $MASS
+WHERE
+  DATE IN ('$DATE')
+GROUP BY
+  MOBILENUMBER,
+  DATE
+HAVING
+  BehaviourMetricValue >= 1 AND VOICE_count = 0"""
     if HAS_ACE:
         # Use streamlit-ace for a proper code editor
         raw_query = st_ace(
@@ -214,7 +228,7 @@ if generate_btn:
         else:
             # 2. Build the Substitution Dictionary
             parsing_dict = {
-                'TARGETS': targets_json.replace('"', '\\"'),
+                'TARGETS': targets_json.replace('"', '\"'),
                 'MASS': mass_path,
                 'VOIP': voip_path,
                 'DATE': date_str,
