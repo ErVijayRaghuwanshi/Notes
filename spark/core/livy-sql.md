@@ -1,58 +1,128 @@
-Gotcha 👍 You’re running **Spark SQL through Apache Livy** on a **local Spark cluster**, and you want to understand **HDFS users** *and* **how to register temp tables**. Let’s walk this step-by-step, practical style.
+Awesome 👍
+Below is a **comprehensive, end-to-end guide** on **using Spark SQL with Apache Livy**, written in a practical way so you can actually *use* it, not just read it.
 
 ---
 
-## 1️⃣ First: a quick word on HDFS user with Livy
+# Comprehensive Guide: Using Spark SQL with Apache Livy
 
-When you submit Spark SQL via **Livy**, the **HDFS user** is usually:
+## 1. What is Apache Livy and why use it?
 
-* The **Livy server OS user** (most common), or
-* The user passed via Livy config (`livy.impersonation.enabled=true`), or
-* The user set in your Spark session (`spark.sql.warehouse.dir`, `HADOOP_USER_NAME`, etc.)
+**Apache Livy** is a REST service that lets you submit **Spark jobs remotely** without managing Spark binaries or sessions manually.
 
-👉 If impersonation is **disabled**, all HDFS access happens as:
+Why teams use Livy:
+
+* Run Spark SQL from **REST / notebooks / apps**
+* Multi-user support
+* Session management
+* Secure (Kerberos, impersonation)
+* Works well with **HDFS + Hive**
+
+Typical flow:
 
 ```
-livy
+Client → Livy → Spark → HDFS / Hive
 ```
 
-(or whatever user Livy service runs as)
+---
 
-You can confirm in Spark SQL:
+## 2. Architecture overview
+
+```
+[ Client ]
+    |
+ REST API
+    |
+[ Livy Server ]
+    |
+ Spark Driver
+    |
+[ Spark Cluster (local / standalone / YARN) ]
+    |
+[ HDFS / Hive Metastore ]
+```
+
+Key points:
+
+* Livy **creates Spark sessions**
+* Spark SQL runs **inside those sessions**
+* HDFS access happens as **Livy user or impersonated user**
+
+---
+
+## 3. Starting a Livy Spark session
+
+### Create a Spark session via REST
+
+```http
+POST /sessions
+Content-Type: application/json
+
+{
+  "kind": "spark",
+  "conf": {
+    "spark.sql.catalogImplementation": "hive"
+  }
+}
+```
+
+Response:
+
+```json
+{
+  "id": 0,
+  "state": "starting"
+}
+```
+
+Once state = `idle`, you’re ready.
+
+---
+
+## 4. Spark SQL basics in Livy
+
+You interact with Spark SQL by submitting **statements**.
+
+### Submit a Spark SQL statement
+
+```http
+POST /sessions/0/statements
+Content-Type: application/json
+
+{
+  "code": "spark.sql(\"SHOW DATABASES\").show()"
+}
+```
+
+---
+
+## 5. Understanding HDFS user behavior
+
+### Default behavior
+
+* Spark runs as the **Livy OS user**
+* HDFS permissions apply to that user
+
+Check current user:
 
 ```sql
 SELECT current_user();
 ```
 
-And in HDFS:
+### Impersonation (optional)
 
-```bash
-hdfs dfs -ls /user
+If enabled:
+
+```properties
+livy.impersonation.enabled=true
 ```
 
----
-
-## 2️⃣ How Spark SQL works in Livy (important)
-
-With Livy, you usually:
-
-* Create a **SparkSession**
-* Load data (HDFS / local / Hive)
-* Register a **temporary table (view)**
-* Query it using Spark SQL
-
-There are **two kinds of temp tables**:
-
-1. **Session-scoped temp view** (most common)
-2. **Global temp view** (shared across sessions)
+Then HDFS operations run as the **requesting user**.
 
 ---
 
-## 3️⃣ Register temp table using Spark SQL (via Livy)
+## 6. Loading data into Spark SQL
 
-### ✅ Option 1: Create temp view from a DataFrame (recommended)
-
-#### Example: Load data from HDFS
+### From HDFS (CSV example)
 
 ```scala
 val df = spark.read
@@ -60,69 +130,72 @@ val df = spark.read
   .csv("hdfs:///user/data/employees.csv")
 ```
 
-#### Register temp table
+### From Parquet
+
+```scala
+val df = spark.read.parquet("hdfs:///warehouse/emp")
+```
+
+### From Hive table
+
+```scala
+val df = spark.table("default.emp_hive")
+```
+
+---
+
+## 7. Registering temp tables (very important)
+
+### Session-scoped temp table
 
 ```scala
 df.createOrReplaceTempView("employees")
 ```
 
-#### Query it
-
-```scala
-spark.sql("SELECT * FROM employees").show()
-```
-
-📌 This temp table:
-
-* Exists **only for this Livy session**
-* Is **not stored in HDFS**
-* Disappears when the session ends
-
----
-
-## 4️⃣ Option 2: Register temp table using pure SQL
-
-You can do this **entirely in Spark SQL**:
-
-```sql
-CREATE OR REPLACE TEMP VIEW employees AS
-SELECT *
-FROM csv.`hdfs:///user/data/employees.csv`;
-```
-
-Then:
+Query:
 
 ```sql
 SELECT * FROM employees;
 ```
 
+📌 Scope:
+
+* Only available in **this Livy session**
+* Deleted when session ends
+
 ---
 
-## 5️⃣ Option 3: Global temp table (shared across sessions)
+### SQL-only temp view
 
-If you want a temp table **visible to other Spark sessions**:
+```sql
+CREATE OR REPLACE TEMP VIEW employees AS
+SELECT * FROM parquet.`hdfs:///warehouse/emp`;
+```
+
+---
+
+### Global temp view
 
 ```scala
 df.createOrReplaceGlobalTempView("employees")
 ```
 
-Query it like this:
+Query:
 
 ```sql
 SELECT * FROM global_temp.employees;
 ```
 
-📌 Notes:
+📌 Scope:
 
-* Stored in Spark memory
-* Schema is `global_temp`
+* Available to **all Spark sessions**
 * Removed when Spark application stops
 
 ---
 
-## 6️⃣ If you are using Hive tables (very common with Livy)
+## 8. Working with Hive tables (persistent storage)
 
-If Hive is enabled:
+### Create managed Hive table
 
 ```sql
 CREATE TABLE emp_hive (
@@ -133,42 +206,119 @@ CREATE TABLE emp_hive (
 STORED AS PARQUET;
 ```
 
-Then:
+* Stored in HDFS warehouse
+* Uses Hive metastore
+* Persists after session ends
+
+---
+
+### External Hive table
 
 ```sql
-SELECT * FROM emp_hive;
+CREATE EXTERNAL TABLE emp_ext (
+  id INT,
+  name STRING
+)
+STORED AS PARQUET
+LOCATION 'hdfs:///external/emp';
 ```
 
-📌 Hive tables:
-
-* Stored in HDFS (warehouse directory)
-* Respect **HDFS permissions**
-* Persist after Livy session ends
+* Spark does not manage data lifecycle
+* Good for shared datasets
 
 ---
 
-## 7️⃣ Common mistakes (watch out 👀)
+## 9. Temp table vs Hive table (comparison)
 
-❌ Trying to access temp tables from another Livy session
-❌ Expecting temp tables to persist after session restart
-❌ HDFS permission denied (Livy user ≠ HDFS directory owner)
-
----
-
-## 8️⃣ Quick checklist for your setup
-
-* ✅ Livy session running
-* ✅ SparkSession available (`spark`)
-* ✅ HDFS permissions correct
-* ✅ Using `TEMP VIEW` vs `HIVE TABLE` intentionally
+| Feature        | Temp View | Global Temp  | Hive Table   |
+| -------------- | --------- | ------------ | ------------ |
+| Persistent     | ❌         | ❌            | ✅            |
+| Stored in HDFS | ❌         | ❌            | ✅            |
+| Session scope  | Yes       | All sessions | All sessions |
+| Needs Hive     | ❌         | ❌            | ✅            |
 
 ---
 
-If you want, next we can:
+## 10. Common Spark SQL operations via Livy
 
-* Debug **HDFS permission denied** issues
-* Enable **Livy user impersonation**
-* Compare **temp view vs Hive table vs external table**
-* Show **exact REST payload** for Livy Spark SQL
+### Insert data
 
-Just tell me 😄
+```sql
+INSERT INTO emp_hive
+SELECT id, name, salary FROM employees;
+```
+
+### Create table from query
+
+```sql
+CREATE TABLE emp_parquet
+USING parquet
+AS SELECT * FROM employees;
+```
+
+### Cache table
+
+```sql
+CACHE TABLE employees;
+```
+
+---
+
+## 11. Error handling & debugging
+
+### Check statement output
+
+```http
+GET /sessions/0/statements/3
+```
+
+### Common errors
+
+* **Permission denied** → HDFS user mismatch
+* **Table not found** → Temp table session ended
+* **Hive not found** → `spark.sql.catalogImplementation=hive` missing
+
+---
+
+## 12. Best practices
+
+✅ Use **temp views** for intermediate data
+✅ Use **Hive tables** for long-term storage
+✅ Clean up unused Livy sessions
+✅ Validate HDFS permissions early
+✅ Enable impersonation in multi-user setups
+
+---
+
+## 13. Typical production workflow
+
+```
+1. Create Livy session
+2. Load data from HDFS/Hive
+3. Register temp views
+4. Run Spark SQL transformations
+5. Save results to Hive / HDFS
+6. Close session
+```
+
+---
+
+## 14. When NOT to use temp tables
+
+❌ Reporting data
+❌ Multi-session sharing
+❌ Long-running pipelines
+
+Use **Hive or external tables** instead.
+
+---
+
+If you want next, I can:
+
+* Show **exact curl commands**
+* Explain **Livy + Kerberos**
+* Walk through **end-to-end Spark SQL ETL**
+* Help tune **Spark SQL performance**
+* Explain **warehouse directory & permissions**
+
+Just say the word 👌
