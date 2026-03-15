@@ -9,8 +9,10 @@ Apache Spark fundamentals, optimization techniques, and integration patterns for
 - **[Narrow vs Wide Transformations](spark/core-concepts/Narrow_vs_Wide_Transformations.md)** - Shuffle, stages, and performance
 
 ### Spark Integrations
+- **[Delta Lake 101](spark/integrations/Delta_Lake_101.md)** - ACID transactions, MERGE, time travel, and production best practices
 - **[Livy Delta Lake](spark/integrations/Livy_Delta_Lake.md)** - Apache Livy with Delta Lake integration
 - **[Livy SQL](spark/integrations/Livy_SQL.md)** - SQL operations through Livy REST API
+- **[Spark Declarative Pipelines 101](spark/integrations/Spark_Declarative_Pipelines_101.md)** - Spark 4.1 SDP basics, dataset DAGs, and quality-first pipeline design
 
 ### Optimization (Coming Soon)
 - Caching & Persistence strategies
@@ -31,7 +33,9 @@ Apache Spark fundamentals, optimization techniques, and integration patterns for
 1. **Shuffle Optimization** → Minimize data movement
 2. **Memory Management** → Tune executor memory
 3. **Catalyst Optimizer** → Understand query planning
-4. **Advanced Integrations** → Delta Lake, Iceberg, Hudi
+4. **Delta Lake 101** → Learn ACID tables, MERGE, and time travel
+5. **Spark Declarative Pipelines 101** → Learn dataset-centric pipeline design
+6. **Advanced Integrations** → Delta Lake, Iceberg, Hudi
 
 ## 💡 Interview Topics
 
