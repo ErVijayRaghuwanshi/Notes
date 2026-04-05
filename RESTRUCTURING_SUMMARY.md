@@ -9,8 +9,10 @@
 Organized content into 6 skill-based categories plus interview prep:
 - `01-computer-science-fundamentals/` - Core CS concepts
 - `02-backend-development/` - FastAPI, databases, API gateways
-- `03-big-data-engineering/` - Apache Spark and distributed processing
-- `04-system-design/` - Architecture patterns and case studies
+- `BigData/` - Comprehensive big data hub with sections and interview FAQ
+- `03-big-data-engineering/` - Legacy compatibility pointer to the new big data hub
+- `SystemDesign/` - Comprehensive system design hub with sections, case studies, and FAQ
+- `04-system-design/` - Legacy compatibility pointer to the new system design hub
 - `05-cloud-and-devops/` - Kubernetes, Docker, CI/CD
 - `06-specialized-topics/` - IoT/embedded systems, tools
 - `interview-prep/` - Behavioral, coding patterns, quick references
@@ -83,7 +85,7 @@ Organized content into 6 skill-based categories plus interview prep:
 ### High Priority
 - [ ] Add data structures content (arrays, trees, graphs, hash tables)
 - [ ] Add algorithms content (sorting, searching, DP, greedy)
-- [ ] Create system design case studies (Twitter, URL shortener, etc.)
+- [ ] Expand system design notes with additional advanced case studies
 - [ ] Add coding patterns (two pointers, sliding window, etc.)
 
 ### Medium Priority
@@ -111,8 +113,8 @@ Organized content into 6 skill-based categories plus interview prep:
 - [Main README](README.md)
 - [Computer Science Fundamentals](01-computer-science-fundamentals/README.md)
 - [Backend Development](02-backend-development/README.md)
-- [Big Data Engineering](03-big-data-engineering/README.md)
-- [System Design](04-system-design/README.md)
+- [Big Data Engineering](BigData/README.md)
+- [System Design](SystemDesign/README.md)
 - [Cloud & DevOps](05-cloud-and-devops/README.md)
 - [Specialized Topics](06-specialized-topics/README.md)
 - [Interview Prep](interview-prep/README.md)

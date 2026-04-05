@@ -115,5 +115,5 @@ Container orchestration, CI/CD pipelines, and cloud infrastructure for deploying
 ## 🔗 Related Topics
 
 - [Backend Development](../02-backend-development/) - FastAPI K8s deployment
-- [System Design](../04-system-design/) - Infrastructure architecture
-- [Big Data Engineering](../03-big-data-engineering/) - Spark on K8s
+- [System Design](../SystemDesign/README.md) - Infrastructure architecture
+- [Big Data Engineering](../BigData/README.md) - Spark on K8s and data-platform operations

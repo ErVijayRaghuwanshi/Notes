@@ -54,5 +54,5 @@ Production-ready backend development patterns, frameworks, and best practices fo
 ## 🔗 Related Topics
 
 - [Computer Science Fundamentals](../01-computer-science-fundamentals/) - SOLID principles
-- [System Design](../04-system-design/) - Microservices patterns
+- [System Design](../SystemDesign/README.md) - Microservices patterns
 - [Cloud & DevOps](../05-cloud-and-devops/) - Kubernetes deployment

@@ -41,4 +41,4 @@ Core computer science concepts essential for SDE2 interviews and professional de
 ## 🔗 Related Topics
 
 - [Backend Development](../02-backend-development/) - Apply these patterns in FastAPI
-- [System Design](../04-system-design/) - Use these fundamentals in architecture decisions
+- [System Design](../SystemDesign/README.md) - Use these fundamentals in architecture decisions

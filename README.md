@@ -6,21 +6,46 @@ A comprehensive, structured knowledge base for Software Development Engineer 2 (
 
 ### 🔧 Backend Engineer
 1. [Backend Development](02-backend-development/) - FastAPI, databases, API gateways
-2. [System Design](04-system-design/) - Scalable architecture patterns
+2. [System Design](SystemDesign/README.md) - Scalable architecture patterns and case studies
 3. [Computer Science Fundamentals](01-computer-science-fundamentals/) - SOLID, data structures, algorithms
 4. [Cloud & DevOps](05-cloud-and-devops/) - Kubernetes, Docker, CI/CD
 
 ### 📊 Data Engineer
-1. [Big Data Engineering](03-big-data-engineering/) - Apache Spark, optimization
+1. [Big Data Engineering](BigData/README.md) - Spark, Kafka, lakehouse, orchestration
 2. [Backend Development](02-backend-development/) - API integration, databases
-3. [System Design](04-system-design/) - Distributed systems
+3. [System Design](SystemDesign/README.md) - Distributed systems and trade-offs
 4. [Computer Science Fundamentals](01-computer-science-fundamentals/) - Algorithms, design patterns
 
 ### 🌐 Full-Stack Engineer
 1. [Backend Development](02-backend-development/) - FastAPI, RBAC, deployment
 2. [Computer Science Fundamentals](01-computer-science-fundamentals/) - Core CS concepts
-3. [System Design](04-system-design/) - End-to-end architecture
+3. [System Design](SystemDesign/README.md) - End-to-end architecture and APIs
 4. [Cloud & DevOps](05-cloud-and-devops/) - Production deployment
+
+### DevOps Engineer
+1. [DevOps Notes Hub](DevOps/README.md) - Comprehensive interview prep index
+2. [Linux](DevOps/01-linux/linux-notes.md) - File system, permissions, systemd, cron, SSH
+3. [Networking](DevOps/02-networking/networking-notes.md) - DNS, subnetting, load balancing, firewalls, VPN
+4. [Docker & Kubernetes](DevOps/04-docker/docker-notes.md) - Containers, orchestration, services, RBAC, Helm
+5. [CI/CD & GitOps](DevOps/06-ci-cd/ci-cd-notes.md) - Pipelines, deployment strategies, ArgoCD, FluxCD
+6. [Infrastructure as Code](DevOps/08-terraform/terraform-notes.md) - Terraform, Ansible, modules, state, automation
+7. [Cloud & Monitoring](DevOps/10-aws/aws-notes.md) - AWS, Azure, observability, alerting, tracing
+
+**Recommended Study Order**
+- **Phase 1: Foundations** - Linux, Networking, Git, Shell Scripting
+- **Phase 2: Containers** - Docker, Kubernetes
+- **Phase 3: CI/CD & GitOps** - CI/CD, Jenkins, GitOps
+- **Phase 4: IaC** - Terraform, Ansible
+- **Phase 5: Cloud & Monitoring** - AWS, Azure, AWS vs Azure, Monitoring
+- **Phase 6: Interview Prep** - Scenario, Behavioral, Technical Q&A
+
+**Each Section Contains**
+- **Core Concepts** - Key topics with explanations and diagrams
+- **Practical Examples** - Commands, configs, and code snippets
+- **Cheat Sheet** - Quick reference table
+- **Hands-on Labs** - Step-by-step exercises
+- **Real-world Scenarios** - Production scenarios with solutions
+- **Interview Q&A** - Basic, intermediate, and advanced questions
 
 ## 📚 Repository Structure
 
@@ -36,17 +61,19 @@ Production-ready backend patterns and frameworks
 - **API Gateway**: Kong with JWT authentication
 - **Databases**: Design, normalization, optimization
 
-### [03-big-data-engineering/](03-big-data-engineering/)
-Distributed data processing with Apache Spark
-- **Core Concepts**: Actions vs transformations, narrow vs wide
-- **Integrations**: Livy, Delta Lake, SQL operations
-- **Optimization**: Caching, partitioning, broadcast (coming soon)
+### [BigData/](BigData/)
+Comprehensive big data and data-platform interview hub
+- **Foundations**: Hadoop, HDFS, Spark core, Spark SQL, Structured Streaming
+- **Platform Components**: Kafka, Airflow, Hive metastore, Solr, Trino
+- **Lakehouse**: Delta tables, Spark 4.1 / SDP, Iceberg, Hudi comparisons
+- **Architecture**: Data-platform design, governance, lineage, batch vs streaming
 
-### [04-system-design/](04-system-design/)
-Scalable system architecture and design patterns
-- **Fundamentals**: CAP theorem, scaling, caching (coming soon)
-- **Patterns**: Microservices, event-driven, CQRS (coming soon)
-- **Case Studies**: Twitter, URL shortener, etc. (coming soon)
+### [SystemDesign/](SystemDesign/)
+Comprehensive system design interview hub
+- **Foundations**: Scalability, networking, storage, databases, caching
+- **Distributed Systems**: Messaging, consistency, replication, load balancing
+- **Production Readiness**: Reliability, security, observability, estimation
+- **Case Studies**: URL shortener, news feed, chat, notifications, rate limiting, streaming
 
 ### [05-cloud-and-devops/](05-cloud-and-devops/)
 Container orchestration and deployment
@@ -76,8 +103,8 @@ Interview-specific preparation materials
 
 **Week 3-4: Domain Expertise**
 - [ ] **Backend**: [FastAPI RBAC](02-backend-development/fastapi/FastAPI_RBAC.md), [Kong Gateway](02-backend-development/api-gateway/Kong_API_Gateway_101.md)
-- [ ] **Data Engineering**: [Spark Transformations](03-big-data-engineering/spark/core-concepts/Actions_vs_Transformations.md), [Optimization](03-big-data-engineering/spark/core-concepts/Narrow_vs_Wide_Transformations.md)
-- [ ] **System Design**: Study scalability patterns and case studies
+- [ ] **Data Engineering**: Study the [Big Data hub](BigData/README.md), then review [Spark Core](BigData/03-spark-core/spark-core-notes.md) and [Delta Lake](BigData/08-delta-lake-and-delta-tables/delta-lake-and-delta-tables-notes.md)
+- [ ] **System Design**: Study the [System Design hub](SystemDesign/README.md) and practice [case studies](SystemDesign/15-case-studies/README.md)
 
 **Week 5-6: Practice & Polish**
 - [ ] Mock interviews (technical + behavioral)
@@ -109,8 +136,8 @@ Each category has a detailed README with learning paths and interview tips.
 |----------|--------|-------|
 | Computer Science Fundamentals | 🟡 Partial | 1 (SOLID) |
 | Backend Development | 🟢 Complete | 5 (FastAPI, Kong, DB) |
-| Big Data Engineering | 🟢 Complete | 4 (Spark core + integrations) |
-| System Design | 🔴 Coming Soon | 0 |
+| Big Data Engineering | 🟢 Complete | 18 (hub, sections, FAQ) |
+| System Design | 🟢 Complete | 28 (hub, sections, case studies, FAQ) |
 | Cloud & DevOps | 🔴 Coming Soon | 0 |
 | Specialized Topics | 🟢 Complete | 3 (IoT, tools) |
 | Interview Prep | 🔴 Coming Soon | 0 |
@@ -159,4 +186,4 @@ Licensed under [LICENSE](LICENSE) - see file for details.
 
 ---
 
-**Last Updated**: February 2026 | **Status**: Active Development | **Focus**: SDE2 Interview Preparation
+**Last Updated**: April 2026 | **Status**: Active Development | **Focus**: SDE2 Interview Preparation

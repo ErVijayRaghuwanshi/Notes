@@ -35,4 +35,4 @@ These topics are specialized and may not be required for all SDE2 positions:
 ## 🔗 Related Topics
 
 - [Backend Development](../02-backend-development/) - API integration for IoT data
-- [Big Data Engineering](../03-big-data-engineering/) - Processing sensor data at scale
+- [Big Data Engineering](../BigData/README.md) - Processing sensor data at scale

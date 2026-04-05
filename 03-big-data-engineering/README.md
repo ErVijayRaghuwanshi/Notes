@@ -1,91 +1,23 @@
 # Big Data Engineering
 
-Apache Spark fundamentals, optimization techniques, and integration patterns for distributed data processing at scale.
+This directory is kept as a legacy compatibility entry point for the older Spark-first notes.
 
-## 📚 Contents
+The comprehensive Big Data hub now lives in [../BigData/README.md](../BigData/README.md), including:
+- 14 section-wise notes across Hadoop, Spark, Kafka, Airflow, lakehouse formats, query engines, and platform design
+- dedicated technical, scenario-based, and behavioral interview FAQ files
+- links back to the older Spark deep dives where helpful
 
-### Spark Core Concepts
-- **[Actions vs Transformations](spark/core-concepts/Actions_vs_Transformations.md)** - Lazy evaluation and execution model
-- **[Narrow vs Wide Transformations](spark/core-concepts/Narrow_vs_Wide_Transformations.md)** - Shuffle, stages, and performance
+## Go to the new hub
 
-### Spark Integrations
-- **[Delta Lake 101](spark/integrations/Delta_Lake_101.md)** - ACID transactions, MERGE, time travel, and production best practices
-- **[Livy Delta Lake](spark/integrations/Livy_Delta_Lake.md)** - Apache Livy with Delta Lake integration
-- **[Livy SQL](spark/integrations/Livy_SQL.md)** - SQL operations through Livy REST API
-- **[Spark Declarative Pipelines 101](spark/integrations/Spark_Declarative_Pipelines_101.md)** - Spark 4.1 SDP basics, dataset DAGs, and quality-first pipeline design
+- [BigData/README.md](../BigData/README.md)
+- [Spark Core](../BigData/03-spark-core/spark-core-notes.md)
+- [Delta Lake and Delta Tables](../BigData/08-delta-lake-and-delta-tables/delta-lake-and-delta-tables-notes.md)
+- [Interview FAQ](../BigData/15-interview-faq/technical-questions.md)
 
-### Optimization (Coming Soon)
-- Caching & Persistence strategies
-- Partitioning & Bucketing
-- Broadcast joins
-- Adaptive Query Execution (AQE)
-- Memory tuning
+## Legacy Spark Deep Dives
 
-## 🎯 Learning Path
-
-### Beginner to Intermediate
-1. **Actions vs Transformations** → Understand lazy evaluation
-2. **Narrow vs Wide** → Learn about shuffles and stages
-3. **RDD/DataFrame/Dataset** → Choose the right abstraction
-4. **Basic Optimizations** → Caching and partitioning
-
-### Intermediate to Advanced
-1. **Shuffle Optimization** → Minimize data movement
-2. **Memory Management** → Tune executor memory
-3. **Catalyst Optimizer** → Understand query planning
-4. **Delta Lake 101** → Learn ACID tables, MERGE, and time travel
-5. **Spark Declarative Pipelines 101** → Learn dataset-centric pipeline design
-6. **Advanced Integrations** → Delta Lake, Iceberg, Hudi
-
-## 💡 Interview Topics
-
-### Core Concepts
-- **Lazy Evaluation**: Why Spark uses it, benefits
-- **DAG**: How Spark builds and optimizes execution plans
-- **Shuffle**: What causes it, how to minimize
-- **Partitioning**: Impact on performance
-- **Caching**: When and what to cache
-
-### Common Questions
-- Explain the difference between `map()` and `flatMap()`
-- Why is `reduceByKey()` better than `groupByKey()`?
-- How does Spark handle fault tolerance?
-- What is a broadcast join and when to use it?
-- Explain Spark's memory model (storage vs execution)
-
-### Performance Scenarios
-- "Your Spark job is running slow, how do you debug?"
-- "Explain how you'd optimize a job with multiple joins"
-- "How do you handle data skew?"
-- "When would you use `repartition()` vs `coalesce()`?"
-
-## 🏗️ Architecture Patterns
-
-### Data Processing Patterns
-- **Batch Processing**: Daily/hourly aggregations
-- **Incremental Processing**: Delta Lake merge operations
-- **Lambda Architecture**: Batch + streaming layers
-- **Medallion Architecture**: Bronze → Silver → Gold
-
-### Best Practices
-- Use DataFrame API over RDD
-- Prefer narrow transformations
-- Cache wisely (only reused DataFrames)
-- Partition data appropriately
-- Use broadcast for small tables
-- Monitor with Spark UI
-
-## 📊 Performance Metrics
-
-Key metrics to monitor:
-- **Shuffle Read/Write**: Minimize data movement
-- **Task Duration**: Identify stragglers
-- **GC Time**: Keep under 10% of task time
-- **Spill**: Avoid disk spills
-- **Data Skew**: Balance partition sizes
-
-## 🔗 Related Topics
-
-- [Backend Development](../02-backend-development/) - API integration with Spark
-- [System Design](../04-system-design/) - Distributed systems concepts
-- [Cloud & DevOps](../05-cloud-and-devops/) - Spark on Kubernetes
+- [Actions vs Transformations](spark/core-concepts/Actions_vs_Transformations.md)
+- [Narrow vs Wide Transformations](spark/core-concepts/Narrow_vs_Wide_Transformations.md)
+- [Delta Lake 101](spark/integrations/Delta_Lake_101.md)
+- [Livy SQL](spark/integrations/Livy_SQL.md)
+- [Spark Declarative Pipelines 101](spark/integrations/Spark_Declarative_Pipelines_101.md)

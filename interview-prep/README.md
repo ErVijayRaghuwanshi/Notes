@@ -37,7 +37,7 @@ Comprehensive interview preparation resources for SDE2 positions including behav
 ### 4 Weeks Before
 - [ ] Review all core CS fundamentals
 - [ ] Practice 2-3 LeetCode problems daily
-- [ ] Read system design case studies
+- [ ] Read [system design case studies](../SystemDesign/15-case-studies/README.md)
 - [ ] Prepare behavioral stories (STAR format)
 
 ### 2 Weeks Before
@@ -150,18 +150,18 @@ Comprehensive interview preparation resources for SDE2 positions including behav
 
 ### Backend Engineer
 1. [Backend Development](../02-backend-development/)
-2. [System Design](../04-system-design/)
+2. [System Design](../SystemDesign/README.md)
 3. [CS Fundamentals](../01-computer-science-fundamentals/)
 4. [Cloud & DevOps](../05-cloud-and-devops/)
 
 ### Data Engineer
-1. [Big Data Engineering](../03-big-data-engineering/)
+1. [Big Data Engineering](../BigData/README.md)
 2. [Backend Development](../02-backend-development/)
-3. [System Design](../04-system-design/)
+3. [System Design](../SystemDesign/README.md)
 4. [CS Fundamentals](../01-computer-science-fundamentals/)
 
 ### Full-Stack Engineer
 1. [Backend Development](../02-backend-development/)
 2. [CS Fundamentals](../01-computer-science-fundamentals/)
-3. [System Design](../04-system-design/)
+3. [System Design](../SystemDesign/README.md)
 4. [Cloud & DevOps](../05-cloud-and-devops/)
