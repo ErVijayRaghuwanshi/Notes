@@ -52,6 +52,7 @@ A comprehensive, structured knowledge base for Software Development Engineer 2 (
 ### [01-computer-science-fundamentals/](01-computer-science-fundamentals/)
 Core CS concepts essential for technical interviews
 - **Design Patterns**: SOLID principles with FastAPI examples
+- **Regex**: Comprehensive regex 101 guide and Python re module
 - **Data Structures**: Arrays, trees, graphs, hash tables (coming soon)
 - **Algorithms**: Sorting, searching, DP, greedy (coming soon)
 
@@ -134,7 +135,7 @@ Each category has a detailed README with learning paths and interview tips.
 
 | Category | Status | Files |
 |----------|--------|-------|
-| Computer Science Fundamentals | 🟡 Partial | 1 (SOLID) |
+| Computer Science Fundamentals | 🟡 Partial | 3 (SOLID, Regex) |
 | Backend Development | 🟢 Complete | 5 (FastAPI, Kong, DB) |
 | Big Data Engineering | 🟢 Complete | 18 (hub, sections, FAQ) |
 | System Design | 🟢 Complete | 28 (hub, sections, case studies, FAQ) |
