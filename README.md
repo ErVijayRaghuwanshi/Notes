@@ -85,6 +85,7 @@ Container orchestration and deployment
 ### [06-specialized-topics/](06-specialized-topics/)
 Domain-specific knowledge
 - **IoT/Embedded**: ESP8266, DHT sensors
+- **Testing**: Playwright end-to-end testing framework
 - **Tools**: Custom SQL query builder
 
 ### [interview-prep/](interview-prep/)
@@ -140,7 +141,7 @@ Each category has a detailed README with learning paths and interview tips.
 | Big Data Engineering | 🟢 Complete | 18 (hub, sections, FAQ) |
 | System Design | 🟢 Complete | 28 (hub, sections, case studies, FAQ) |
 | Cloud & DevOps | 🔴 Coming Soon | 0 |
-| Specialized Topics | 🟢 Complete | 3 (IoT, tools) |
+| Specialized Topics | 🟢 Complete | 4 (IoT, Playwright, tools) |
 | Interview Prep | 🔴 Coming Soon | 0 |
 
 ## 🎓 Interview Tips
@@ -180,6 +181,7 @@ This is a personal knowledge base, but suggestions are welcome:
 - Open an issue for content requests
 - Submit PRs for corrections or enhancements
 - Share your interview experiences
+- **Follow the [Notes Template](NOTES_TEMPLATE.md)** for consistent formatting
 
 ## 📄 License
 
