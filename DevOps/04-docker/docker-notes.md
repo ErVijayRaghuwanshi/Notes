@@ -212,6 +212,7 @@ docker build --build-arg NODE_ENV=production -t myapp:v1.0 .
 
 ## 5. Docker Compose
 
+{% raw %}
 ```yaml
 # docker-compose.yml
 version: "3.9"
@@ -294,6 +295,7 @@ secrets:
   db_password:
     file: ./secrets/db_password.txt
 ```
+{% endraw %}
 
 ### Compose Commands
 ```bash
