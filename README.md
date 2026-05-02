@@ -88,6 +88,10 @@ Domain-specific knowledge
 - **Testing**: Playwright end-to-end testing framework
 - **Tools**: Custom SQL query builder
 
+### [07-research/](07-research/)
+Industry research and future trends
+- **AI & Software Development**: The Future of the Software Developer Role (2026–2031), Software 3.0 paradigm shift
+
 ### [interview-prep/](interview-prep/)
 Interview-specific preparation materials
 - **Behavioral**: STAR method, common questions (coming soon)
@@ -142,6 +146,7 @@ Each category has a detailed README with learning paths and interview tips.
 | System Design | 🟢 Complete | 28 (hub, sections, case studies, FAQ) |
 | Cloud & DevOps | 🔴 Coming Soon | 0 |
 | Specialized Topics | 🟢 Complete | 4 (IoT, Playwright, tools) |
+| Research | 🟢 Active | 1 (AI & Software Future) |
 | Interview Prep | 🔴 Coming Soon | 0 |
 
 ## 🎓 Interview Tips
