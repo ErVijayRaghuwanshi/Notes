@@ -1,3 +1,7 @@
+---
+layout: default
+render_with_liquid: false
+---
 # Ansible — DevOps Interview Preparation Notes
 
 ---

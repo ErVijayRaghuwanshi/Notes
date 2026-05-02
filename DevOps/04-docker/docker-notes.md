@@ -1,3 +1,7 @@
+---
+layout: default
+render_with_liquid: false
+---
 # 🐳 Docker – DevOps Notes
 
 ---
