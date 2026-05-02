@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDE2 Interview Prep - Technical Knowledge Base</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 320px;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            transition: transform 0.3s ease;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            transition: margin-left 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 50;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        
+        .tree-item {
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        .tree-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .tree-item.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .tree-folder > .tree-children {
+            display: none;
+        }
+        
+        .tree-folder.open > .tree-children {
+            display: block;
+        }
+        
+        .tree-toggle {
+            transition: transform 0.2s ease;
+        }
+        
+        .tree-folder.open > .tree-header .tree-toggle {
+            transform: rotate(90deg);
+        }
+        
+        .markdown-body {
+            line-height: 1.7;
+        }
+        
+        .markdown-body h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #374151;
+        }
+        
+        .markdown-body h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #60a5fa;
+        }
+        
+        .markdown-body h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #93c5fd;
+        }
+        
+        .markdown-body h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .markdown-body p {
+            margin-bottom: 1rem;
+        }
+        
+        .markdown-body ul, .markdown-body ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .markdown-body li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .markdown-body code:not([class*="language-"]) {
+            background-color: #374151;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            color: #fbbf24;
+        }
+        
+        .markdown-body pre {
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        
+        .markdown-body table {
+            width: 100%;
+            margin-bottom: 1rem;
+            border-collapse: collapse;
+        }
+        
+        .markdown-body th, .markdown-body td {
+            border: 1px solid #374151;
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+        
+        .markdown-body th {
+            background-color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .markdown-body blockquote {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
+        .markdown-body a {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+        
+        .markdown-body a:hover {
+            color: #93c5fd;
+        }
+        
+        .markdown-body hr {
+            border: none;
+            border-top: 1px solid #374151;
+            margin: 2rem 0;
+        }
+        
+        .search-highlight {
+            background-color: #fbbf24;
+            color: #1f2937;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .search-result {
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        .search-result:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        .loading-spinner {
+            border: 3px solid #374151;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin: 0 0.5rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Mobile Menu Button -->
+    <button id="menuBtn" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 rounded-lg border border-gray-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full bg-gray-800 border-r border-gray-700 overflow-hidden flex flex-col">
+        <!-- Header -->
+        <div class="p-4 border-b border-gray-700">
+            <h1 class="text-xl font-bold text-blue-400 flex items-center gap-2">
+                <span>📚</span> SDE2 Notes
+            </h1>
+            <p class="text-xs text-gray-400 mt-1">Technical Knowledge Base</p>
+        </div>
+        
+        <!-- Search -->
+        <div class="p-3 border-b border-gray-700">
+            <div class="relative">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search notes... (Ctrl+K)"
+                    class="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 pl-9 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                >
+                <svg class="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+            <!-- Search Results -->
+            <div id="searchResults" class="hidden mt-2 max-h-64 overflow-y-auto bg-gray-900 rounded-lg border border-gray-600">
+            </div>
+        </div>
+        
+        <!-- File Tree -->
+        <div id="fileTree" class="flex-1 overflow-y-auto p-2 text-sm">
+            <div class="text-center py-8">
+                <div class="loading-spinner mx-auto"></div>
+                <p class="text-gray-400 mt-2 text-xs">Loading file tree...</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="p-3 border-t border-gray-700 text-xs text-gray-500">
+            <a href="https://github.com/ErVijayRaghuwanshi/Notes" target="_blank" class="flex items-center gap-2 hover:text-blue-400">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                View on GitHub
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content min-h-screen">
+        <!-- Top Bar -->
+        <header class="sticky top-0 bg-gray-900/95 backdrop-blur border-b border-gray-700 px-6 py-3 z-10">
+            <div id="breadcrumb" class="flex items-center text-sm text-gray-400">
+                <span class="breadcrumb-item">Home</span>
+            </div>
+        </header>
+        
+        <!-- Content Area -->
+        <div class="p-6 max-w-4xl mx-auto">
+            <div id="contentArea" class="markdown-body">
+                <!-- Welcome content will be loaded here -->
+                <div class="text-center py-12">
+                    <div class="loading-spinner mx-auto"></div>
+                    <p class="text-gray-400 mt-4">Loading content...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Overlay for mobile -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+
+    <script>
+    // File tree structure
+    const fileTree = {
+        name: 'Notes',
+        type: 'folder',
+        children: [
+            {
+                name: '01-computer-science-fundamentals',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: '01-computer-science-fundamentals/README.md' },
+                    {
+                        name: 'design-patterns',
+                        type: 'folder',
+                        children: [
+                            { name: 'SOLID.md', type: 'file', path: '01-computer-science-fundamentals/design-patterns/SOLID.md' }
+                        ]
+                    },
+                    {
+                        name: 'regex',
+                        type: 'folder',
+                        children: [
+                            { name: 'python-re-module.md', type: 'file', path: '01-computer-science-fundamentals/regex/python-re-module.md' },
+                            { name: 'regex-101.md', type: 'file', path: '01-computer-science-fundamentals/regex/regex-101.md' }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: '02-backend-development',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: '02-backend-development/README.md' },
+                    {
+                        name: 'api-gateway',
+                        type: 'folder',
+                        children: [
+                            { name: 'Kong_API_Gateway_101.md', type: 'file', path: '02-backend-development/api-gateway/Kong_API_Gateway_101.md' }
+                        ]
+                    },
+                    {
+                        name: 'databases',
+                        type: 'folder',
+                        children: [
+                            { name: 'Database_Design.md', type: 'file', path: '02-backend-development/databases/Database_Design.md' }
+                        ]
+                    },
+                    {
+                        name: 'fastapi',
+                        type: 'folder',
+                        children: [
+                            { name: 'FastAPI_K8s_Deployment.md', type: 'file', path: '02-backend-development/fastapi/FastAPI_K8s_Deployment.md' },
+                            { name: 'FastAPI_Middleware.md', type: 'file', path: '02-backend-development/fastapi/FastAPI_Middleware.md' },
+                            { name: 'FastAPI_RBAC.md', type: 'file', path: '02-backend-development/fastapi/FastAPI_RBAC.md' }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: '03-big-data-engineering',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: '03-big-data-engineering/README.md' },
+                    {
+                        name: 'spark',
+                        type: 'folder',
+                        children: [
+                            {
+                                name: 'core-concepts',
+                                type: 'folder',
+                                children: [
+                                    { name: 'Actions_vs_Transformations.md', type: 'file', path: '03-big-data-engineering/spark/core-concepts/Actions_vs_Transformations.md' },
+                                    { name: 'Narrow_vs_Wide_Transformations.md', type: 'file', path: '03-big-data-engineering/spark/core-concepts/Narrow_vs_Wide_Transformations.md' }
+                                ]
+                            },
+                            {
+                                name: 'integrations',
+                                type: 'folder',
+                                children: [
+                                    { name: 'Delta_Lake_101.md', type: 'file', path: '03-big-data-engineering/spark/integrations/Delta_Lake_101.md' },
+                                    { name: 'Livy_Delta_Lake.md', type: 'file', path: '03-big-data-engineering/spark/integrations/Livy_Delta_Lake.md' },
+                                    { name: 'Livy_SQL.md', type: 'file', path: '03-big-data-engineering/spark/integrations/Livy_SQL.md' },
+                                    { name: 'Spark_Declarative_Pipelines_101.md', type: 'file', path: '03-big-data-engineering/spark/integrations/Spark_Declarative_Pipelines_101.md' }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: 'BigData',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: 'BigData/README.md' },
+                    { name: '01-hadoop-and-ecosystem', type: 'folder', children: [
+                        { name: 'hadoop-and-ecosystem-notes.md', type: 'file', path: 'BigData/01-hadoop-and-ecosystem/hadoop-and-ecosystem-notes.md' }
+                    ]},
+                    { name: '02-hdfs', type: 'folder', children: [
+                        { name: 'hdfs-notes.md', type: 'file', path: 'BigData/02-hdfs/hdfs-notes.md' }
+                    ]},
+                    { name: '03-spark-core', type: 'folder', children: [
+                        { name: 'spark-core-notes.md', type: 'file', path: 'BigData/03-spark-core/spark-core-notes.md' }
+                    ]},
+                    { name: '04-spark-sql-and-optimization', type: 'folder', children: [
+                        { name: 'spark-sql-and-optimization-notes.md', type: 'file', path: 'BigData/04-spark-sql-and-optimization/spark-sql-and-optimization-notes.md' }
+                    ]},
+                    { name: '05-spark-structured-streaming', type: 'folder', children: [
+                        { name: 'spark-structured-streaming-notes.md', type: 'file', path: 'BigData/05-spark-structured-streaming/spark-structured-streaming-notes.md' }
+                    ]},
+                    { name: '06-kafka', type: 'folder', children: [
+                        { name: 'kafka-notes.md', type: 'file', path: 'BigData/06-kafka/kafka-notes.md' }
+                    ]},
+                    { name: '07-airflow-and-orchestration', type: 'folder', children: [
+                        { name: 'airflow-and-orchestration-notes.md', type: 'file', path: 'BigData/07-airflow-and-orchestration/airflow-and-orchestration-notes.md' }
+                    ]},
+                    { name: '08-delta-lake-and-delta-tables', type: 'folder', children: [
+                        { name: 'delta-lake-and-delta-tables-notes.md', type: 'file', path: 'BigData/08-delta-lake-and-delta-tables/delta-lake-and-delta-tables-notes.md' }
+                    ]},
+                    { name: '09-spark-4-1-and-sdp', type: 'folder', children: [
+                        { name: 'spark-4-1-and-sdp-notes.md', type: 'file', path: 'BigData/09-spark-4-1-and-sdp/spark-4-1-and-sdp-notes.md' }
+                    ]},
+                    { name: '10-hive-and-metastore', type: 'folder', children: [
+                        { name: 'hive-and-metastore-notes.md', type: 'file', path: 'BigData/10-hive-and-metastore/hive-and-metastore-notes.md' }
+                    ]},
+                    { name: '11-solr', type: 'folder', children: [
+                        { name: 'solr-notes.md', type: 'file', path: 'BigData/11-solr/solr-notes.md' }
+                    ]},
+                    { name: '12-iceberg-and-open-table-formats', type: 'folder', children: [
+                        { name: 'iceberg-and-open-table-formats-notes.md', type: 'file', path: 'BigData/12-iceberg-and-open-table-formats/iceberg-and-open-table-formats-notes.md' }
+                    ]},
+                    { name: '13-trino-and-interactive-querying', type: 'folder', children: [
+                        { name: 'trino-and-interactive-querying-notes.md', type: 'file', path: 'BigData/13-trino-and-interactive-querying/trino-and-interactive-querying-notes.md' }
+                    ]},
+                    { name: '14-data-platform-architecture', type: 'folder', children: [
+                        { name: 'data-platform-architecture-notes.md', type: 'file', path: 'BigData/14-data-platform-architecture/data-platform-architecture-notes.md' }
+                    ]},
+                    { name: '15-interview-faq', type: 'folder', children: [
+                        { name: 'behavioral-questions.md', type: 'file', path: 'BigData/15-interview-faq/behavioral-questions.md' },
+                        { name: 'scenario-based-questions.md', type: 'file', path: 'BigData/15-interview-faq/scenario-based-questions.md' },
+                        { name: 'technical-questions.md', type: 'file', path: 'BigData/15-interview-faq/technical-questions.md' }
+                    ]}
+                ]
+            },
+            {
+                name: 'DevOps',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: 'DevOps/README.md' },
+                    { name: '01-linux', type: 'folder', children: [
+                        { name: 'linux-notes.md', type: 'file', path: 'DevOps/01-linux/linux-notes.md' }
+                    ]},
+                    { name: '02-networking', type: 'folder', children: [
+                        { name: 'networking-notes.md', type: 'file', path: 'DevOps/02-networking/networking-notes.md' }
+                    ]},
+                    { name: '03-git', type: 'folder', children: [
+                        { name: 'git-notes.md', type: 'file', path: 'DevOps/03-git/git-notes.md' }
+                    ]},
+                    { name: '04-docker', type: 'folder', children: [
+                        { name: 'docker-notes.md', type: 'file', path: 'DevOps/04-docker/docker-notes.md' }
+                    ]},
+                    { name: '05-kubernetes', type: 'folder', children: [
+                        { name: 'kubernetes-notes.md', type: 'file', path: 'DevOps/05-kubernetes/kubernetes-notes.md' }
+                    ]},
+                    { name: '06-ci-cd', type: 'folder', children: [
+                        { name: 'ci-cd-notes.md', type: 'file', path: 'DevOps/06-ci-cd/ci-cd-notes.md' }
+                    ]},
+                    { name: '07-jenkins', type: 'folder', children: [
+                        { name: 'jenkins-notes.md', type: 'file', path: 'DevOps/07-jenkins/jenkins-notes.md' }
+                    ]},
+                    { name: '08-terraform', type: 'folder', children: [
+                        { name: 'terraform-notes.md', type: 'file', path: 'DevOps/08-terraform/terraform-notes.md' }
+                    ]},
+                    { name: '09-ansible', type: 'folder', children: [
+                        { name: 'ansible-notes.md', type: 'file', path: 'DevOps/09-ansible/ansible-notes.md' }
+                    ]},
+                    { name: '10-aws', type: 'folder', children: [
+                        { name: 'aws-notes.md', type: 'file', path: 'DevOps/10-aws/aws-notes.md' }
+                    ]},
+                    { name: '11-azure', type: 'folder', children: [
+                        { name: 'azure-notes.md', type: 'file', path: 'DevOps/11-azure/azure-notes.md' }
+                    ]},
+                    { name: '12-aws-vs-azure', type: 'folder', children: [
+                        { name: 'aws-vs-azure-notes.md', type: 'file', path: 'DevOps/12-aws-vs-azure/aws-vs-azure-notes.md' }
+                    ]},
+                    { name: '13-monitoring', type: 'folder', children: [
+                        { name: 'monitoring-notes.md', type: 'file', path: 'DevOps/13-monitoring/monitoring-notes.md' }
+                    ]},
+                    { name: '14-shell-scripting', type: 'folder', children: [
+                        { name: 'shell-scripting-notes.md', type: 'file', path: 'DevOps/14-shell-scripting/shell-scripting-notes.md' }
+                    ]},
+                    { name: '15-gitops', type: 'folder', children: [
+                        { name: 'gitops-notes.md', type: 'file', path: 'DevOps/15-gitops/gitops-notes.md' }
+                    ]},
+                    { name: '16-interview-faq', type: 'folder', children: [
+                        { name: 'behavioral-questions.md', type: 'file', path: 'DevOps/16-interview-faq/behavioral-questions.md' },
+                        { name: 'scenario-based-questions.md', type: 'file', path: 'DevOps/16-interview-faq/scenario-based-questions.md' },
+                        { name: 'technical-questions.md', type: 'file', path: 'DevOps/16-interview-faq/technical-questions.md' }
+                    ]}
+                ]
+            },
+            {
+                name: 'SystemDesign',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: 'SystemDesign/README.md' },
+                    { name: '01-scalability-basics', type: 'folder', children: [
+                        { name: 'scalability-basics-notes.md', type: 'file', path: 'SystemDesign/01-scalability-basics/scalability-basics-notes.md' }
+                    ]},
+                    { name: '02-networking-and-communication', type: 'folder', children: [
+                        { name: 'networking-and-communication-notes.md', type: 'file', path: 'SystemDesign/02-networking-and-communication/networking-and-communication-notes.md' }
+                    ]},
+                    { name: '03-storage-systems', type: 'folder', children: [
+                        { name: 'storage-systems-notes.md', type: 'file', path: 'SystemDesign/03-storage-systems/storage-systems-notes.md' }
+                    ]},
+                    { name: '04-databases', type: 'folder', children: [
+                        { name: 'databases-notes.md', type: 'file', path: 'SystemDesign/04-databases/databases-notes.md' }
+                    ]},
+                    { name: '05-caching', type: 'folder', children: [
+                        { name: 'caching-notes.md', type: 'file', path: 'SystemDesign/05-caching/caching-notes.md' }
+                    ]},
+                    { name: '06-messaging-and-stream-processing', type: 'folder', children: [
+                        { name: 'messaging-and-stream-processing-notes.md', type: 'file', path: 'SystemDesign/06-messaging-and-stream-processing/messaging-and-stream-processing-notes.md' }
+                    ]},
+                    { name: '07-api-design-and-gateways', type: 'folder', children: [
+                        { name: 'api-design-and-gateways-notes.md', type: 'file', path: 'SystemDesign/07-api-design-and-gateways/api-design-and-gateways-notes.md' }
+                    ]},
+                    { name: '08-load-balancing-and-proxies', type: 'folder', children: [
+                        { name: 'load-balancing-and-proxies-notes.md', type: 'file', path: 'SystemDesign/08-load-balancing-and-proxies/load-balancing-and-proxies-notes.md' }
+                    ]},
+                    { name: '09-consistency-replication-and-partitioning', type: 'folder', children: [
+                        { name: 'consistency-replication-and-partitioning-notes.md', type: 'file', path: 'SystemDesign/09-consistency-replication-and-partitioning/consistency-replication-and-partitioning-notes.md' }
+                    ]},
+                    { name: '10-microservices-and-architectural-patterns', type: 'folder', children: [
+                        { name: 'microservices-and-architectural-patterns-notes.md', type: 'file', path: 'SystemDesign/10-microservices-and-architectural-patterns/microservices-and-architectural-patterns-notes.md' }
+                    ]},
+                    { name: '11-reliability-resilience-and-fault-tolerance', type: 'folder', children: [
+                        { name: 'reliability-resilience-and-fault-tolerance-notes.md', type: 'file', path: 'SystemDesign/11-reliability-resilience-and-fault-tolerance/reliability-resilience-and-fault-tolerance-notes.md' }
+                    ]},
+                    { name: '12-security-and-multi-tenancy', type: 'folder', children: [
+                        { name: 'security-and-multi-tenancy-notes.md', type: 'file', path: 'SystemDesign/12-security-and-multi-tenancy/security-and-multi-tenancy-notes.md' }
+                    ]},
+                    { name: '13-observability-capacity-and-performance', type: 'folder', children: [
+                        { name: 'observability-capacity-and-performance-notes.md', type: 'file', path: 'SystemDesign/13-observability-capacity-and-performance/observability-capacity-and-performance-notes.md' }
+                    ]},
+                    { name: '14-back-of-the-envelope-estimation', type: 'folder', children: [
+                        { name: 'back-of-the-envelope-estimation-notes.md', type: 'file', path: 'SystemDesign/14-back-of-the-envelope-estimation/back-of-the-envelope-estimation-notes.md' }
+                    ]},
+                    { name: '15-case-studies', type: 'folder', children: [
+                        { name: 'README.md', type: 'file', path: 'SystemDesign/15-case-studies/README.md' },
+                        { name: 'chat-system.md', type: 'file', path: 'SystemDesign/15-case-studies/chat-system.md' },
+                        { name: 'file-storage.md', type: 'file', path: 'SystemDesign/15-case-studies/file-storage.md' },
+                        { name: 'news-feed.md', type: 'file', path: 'SystemDesign/15-case-studies/news-feed.md' },
+                        { name: 'notification-system.md', type: 'file', path: 'SystemDesign/15-case-studies/notification-system.md' },
+                        { name: 'rate-limiter.md', type: 'file', path: 'SystemDesign/15-case-studies/rate-limiter.md' },
+                        { name: 'ride-hailing.md', type: 'file', path: 'SystemDesign/15-case-studies/ride-hailing.md' },
+                        { name: 'search-autocomplete.md', type: 'file', path: 'SystemDesign/15-case-studies/search-autocomplete.md' },
+                        { name: 'url-shortener.md', type: 'file', path: 'SystemDesign/15-case-studies/url-shortener.md' },
+                        { name: 'video-streaming.md', type: 'file', path: 'SystemDesign/15-case-studies/video-streaming.md' }
+                    ]},
+                    { name: '16-interview-faq', type: 'folder', children: [
+                        { name: 'behavioral-questions.md', type: 'file', path: 'SystemDesign/16-interview-faq/behavioral-questions.md' },
+                        { name: 'scenario-based-questions.md', type: 'file', path: 'SystemDesign/16-interview-faq/scenario-based-questions.md' },
+                        { name: 'technical-questions.md', type: 'file', path: 'SystemDesign/16-interview-faq/technical-questions.md' }
+                    ]}
+                ]
+            },
+            {
+                name: '06-specialized-topics',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: '06-specialized-topics/README.md' },
+                    { name: 'iot-embedded', type: 'folder', children: [
+                        { name: 'DHT_Exporter.md', type: 'file', path: '06-specialized-topics/iot-embedded/DHT_Exporter.md' },
+                        { name: 'ESP8266_DHT11.md', type: 'file', path: '06-specialized-topics/iot-embedded/ESP8266_DHT11.md' }
+                    ]},
+                    { name: 'testing', type: 'folder', children: [
+                        { name: 'playwright-notes.md', type: 'file', path: '06-specialized-topics/testing/playwright-notes.md' }
+                    ]}
+                ]
+            },
+            {
+                name: '07-research',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: '07-research/README.md' },
+                    { name: 'future-of-software-developer-role.md', type: 'file', path: '07-research/future-of-software-developer-role.md' },
+                    { name: 'index.html', type: 'html', path: '07-research/index.html' }
+                ]
+            },
+            {
+                name: 'interview-prep',
+                type: 'folder',
+                children: [
+                    { name: 'README.md', type: 'file', path: 'interview-prep/README.md' },
+                    { name: 'genesys.md', type: 'file', path: 'interview-prep/genesys.md' },
+                    { name: 'genesys', type: 'folder', children: [
+                        { name: 'README.md', type: 'file', path: 'interview-prep/genesys/README.md' },
+                        { name: '01-role-overview.md', type: 'file', path: 'interview-prep/genesys/01-role-overview.md' },
+                        { name: '02-conversational-ai.md', type: 'file', path: 'interview-prep/genesys/02-conversational-ai.md' },
+                        { name: '03-llm-rag-systems.md', type: 'file', path: 'interview-prep/genesys/03-llm-rag-systems.md' },
+                        { name: '04-agentic-ai.md', type: 'file', path: 'interview-prep/genesys/04-agentic-ai.md' },
+                        { name: '05-mlops-aws.md', type: 'file', path: 'interview-prep/genesys/05-mlops-aws.md' },
+                        { name: '06-system-design.md', type: 'file', path: 'interview-prep/genesys/06-system-design.md' },
+                        { name: '07-coding-focus.md', type: 'file', path: 'interview-prep/genesys/07-coding-focus.md' },
+                        { name: '08-behavioral.md', type: 'file', path: 'interview-prep/genesys/08-behavioral.md' },
+                        { name: '09-qa-bank.md', type: 'file', path: 'interview-prep/genesys/09-qa-bank.md' },
+                        { name: '10-final-revision.md', type: 'file', path: 'interview-prep/genesys/10-final-revision.md' }
+                    ]}
+                ]
+            },
+            { name: 'README.md', type: 'file', path: 'README.md' },
+            { name: 'NOTES_TEMPLATE.md', type: 'file', path: 'NOTES_TEMPLATE.md' },
+            { name: 'RESTRUCTURING_SUMMARY.md', type: 'file', path: 'RESTRUCTURING_SUMMARY.md' }
+        ]
+    };
+
+    // State
+    let currentPath = 'README.md';
+    let allFiles = [];
+    let fileContents = {};
+
+    // DOM Elements
+    const fileTreeEl = document.getElementById('fileTree');
+    const contentArea = document.getElementById('contentArea');
+    const breadcrumb = document.getElementById('breadcrumb');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menuBtn');
+    const overlay = document.getElementById('overlay');
+
+    // Flatten file tree for search
+    function flattenTree(node, path = '') {
+        const results = [];
+        if (node.type === 'file' || node.type === 'html') {
+            results.push({
+                name: node.name,
+                path: node.path,
+                type: node.type,
+                fullPath: path + node.name
+            });
+        }
+        if (node.children) {
+            for (const child of node.children) {
+                results.push(...flattenTree(child, path + node.name + '/'));
+            }
+        }
+        return results;
+    }
+
+    // Render file tree
+    function renderTree(node, depth = 0) {
+        if (node.type === 'file' || node.type === 'html') {
+            const icon = node.type === 'html' ? '🌐' : '📄';
+            return `
+                <div class="tree-item py-1 px-2 rounded flex items-center gap-2" 
+                     data-path="${node.path}" 
+                     data-type="${node.type}"
+                     style="padding-left: ${depth * 12 + 8}px">
+                    <span class="text-xs">${icon}</span>
+                    <span class="truncate">${node.name}</span>
+                </div>
+            `;
+        }
+        
+        if (node.type === 'folder') {
+            const isRoot = depth === 0;
+            return `
+                <div class="tree-folder ${isRoot ? 'open' : ''}">
+                    <div class="tree-header tree-item py-1 px-2 rounded flex items-center gap-2" 
+                         style="padding-left: ${depth * 12 + 8}px">
+                        <span class="tree-toggle text-xs text-gray-400">▶</span>
+                        <span class="text-xs">📁</span>
+                        <span class="font-medium truncate">${node.name}</span>
+                    </div>
+                    <div class="tree-children pl-0">
+                        ${node.children ? node.children.map(child => renderTree(child, depth + 1)).join('') : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        return '';
+    }
+
+    // Load markdown content
+    async function loadContent(path, type = 'file') {
+        contentArea.innerHTML = `
+            <div class="text-center py-12">
+                <div class="loading-spinner mx-auto"></div>
+                <p class="text-gray-400 mt-4">Loading ${path}...</p>
+            </div>
+        `;
+
+        try {
+            if (type === 'html') {
+                // For HTML files, open in new tab or iframe
+                contentArea.innerHTML = `
+                    <div class="text-center py-12">
+                        <h2 class="text-2xl font-bold mb-4">📊 Interactive Visualization</h2>
+                        <p class="text-gray-400 mb-6">${path}</p>
+                        <a href="${path}" target="_blank" 
+                           class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-medium transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                            </svg>
+                            Open Visualization
+                        </a>
+                        <div class="mt-8 border border-gray-700 rounded-lg overflow-hidden">
+                            <iframe src="${path}" class="w-full h-[600px]" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                `;
+                updateBreadcrumb(path);
+                return;
+            }
+
+            const response = await fetch(path);
+            if (!response.ok) throw new Error(`Failed to load ${path}`);
+            
+            const markdown = await response.text();
+            fileContents[path] = markdown;
+            
+            // Configure marked
+            marked.setOptions({
+                highlight: function(code, lang) {
+                    if (Prism.languages[lang]) {
+                        return Prism.highlight(code, Prism.languages[lang], lang);
+                    }
+                    return code;
+                },
+                breaks: true,
+                gfm: true
+            });
+            
+            contentArea.innerHTML = marked.parse(markdown);
+            
+            // Fix relative links in markdown
+            contentArea.querySelectorAll('a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('http') && !href.startsWith('#')) {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const basePath = path.substring(0, path.lastIndexOf('/') + 1);
+                        let newPath = basePath + href;
+                        // Normalize path
+                        newPath = newPath.replace(/\/\.\//g, '/').replace(/[^/]+\/\.\.\//g, '');
+                        loadContent(newPath);
+                        highlightActiveFile(newPath);
+                    });
+                }
+            });
+            
+            updateBreadcrumb(path);
+            currentPath = path;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+        } catch (error) {
+            contentArea.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="text-6xl mb-4">😕</div>
+                    <h2 class="text-2xl font-bold mb-2">Failed to load content</h2>
+                    <p class="text-gray-400 mb-4">${path}</p>
+                    <p class="text-red-400 text-sm">${error.message}</p>
+                    <button onclick="loadContent('README.md')" 
+                            class="mt-6 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">
+                        Go to Home
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Update breadcrumb
+    function updateBreadcrumb(path) {
+        const parts = path.split('/');
+        let html = '<span class="breadcrumb-item cursor-pointer hover:text-blue-400" onclick="loadContent(\'README.md\')">Home</span>';
+        
+        let currentPath = '';
+        parts.forEach((part, index) => {
+            currentPath += (index > 0 ? '/' : '') + part;
+            const isLast = index === parts.length - 1;
+            
+            if (isLast) {
+                html += `<span class="breadcrumb-item text-gray-200">${part}</span>`;
+            } else {
+                html += `<span class="breadcrumb-item cursor-pointer hover:text-blue-400">${part}</span>`;
+            }
+        });
+        
+        breadcrumb.innerHTML = html;
+    }
+
+    // Highlight active file in tree
+    function highlightActiveFile(path) {
+        document.querySelectorAll('.tree-item').forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.path === path) {
+                item.classList.add('active');
+                // Expand parent folders
+                let parent = item.parentElement;
+                while (parent) {
+                    if (parent.classList.contains('tree-folder')) {
+                        parent.classList.add('open');
+                    }
+                    parent = parent.parentElement;
+                }
+            }
+        });
+    }
+
+    // Search functionality
+    function performSearch(query) {
+        if (!query.trim()) {
+            searchResults.classList.add('hidden');
+            return;
+        }
+        
+        const lowerQuery = query.toLowerCase();
+        const results = allFiles.filter(file => 
+            file.name.toLowerCase().includes(lowerQuery) ||
+            file.path.toLowerCase().includes(lowerQuery)
+        ).slice(0, 10);
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = `
+                <div class="p-3 text-gray-400 text-center">
+                    No results found for "${query}"
+                </div>
+            `;
+        } else {
+            searchResults.innerHTML = results.map(file => `
+                <div class="search-result p-2 border-b border-gray-700 last:border-0" 
+                     data-path="${file.path}" data-type="${file.type}">
+                    <div class="font-medium text-sm">${highlightMatch(file.name, query)}</div>
+                    <div class="text-xs text-gray-500 truncate">${file.path}</div>
+                </div>
+            `).join('');
+        }
+        
+        searchResults.classList.remove('hidden');
+    }
+
+    // Highlight search match
+    function highlightMatch(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="search-highlight">$1</span>');
+    }
+
+    // Initialize
+    function init() {
+        // Flatten tree for search
+        allFiles = flattenTree(fileTree);
+        
+        // Render file tree
+        fileTreeEl.innerHTML = fileTree.children.map(child => renderTree(child, 0)).join('');
+        
+        // File tree click handlers
+        fileTreeEl.addEventListener('click', (e) => {
+            const item = e.target.closest('.tree-item');
+            if (!item) return;
+            
+            // Check if it's a folder header
+            if (item.classList.contains('tree-header')) {
+                const folder = item.closest('.tree-folder');
+                folder.classList.toggle('open');
+                return;
+            }
+            
+            // It's a file
+            const path = item.dataset.path;
+            const type = item.dataset.type;
+            if (path) {
+                loadContent(path, type);
+                highlightActiveFile(path);
+                // Close mobile sidebar
+                sidebar.classList.remove('open');
+                overlay.classList.add('hidden');
+            }
+        });
+        
+        // Search handlers
+        searchInput.addEventListener('input', (e) => {
+            performSearch(e.target.value);
+        });
+        
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.trim()) {
+                searchResults.classList.remove('hidden');
+            }
+        });
+        
+        searchResults.addEventListener('click', (e) => {
+            const result = e.target.closest('.search-result');
+            if (result) {
+                const path = result.dataset.path;
+                const type = result.dataset.type;
+                loadContent(path, type);
+                highlightActiveFile(path);
+                searchInput.value = '';
+                searchResults.classList.add('hidden');
+                sidebar.classList.remove('open');
+                overlay.classList.add('hidden');
+            }
+        });
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#searchInput') && !e.target.closest('#searchResults')) {
+                searchResults.classList.add('hidden');
+            }
+        });
+        
+        // Keyboard shortcut for search
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+            if (e.key === 'Escape') {
+                searchResults.classList.add('hidden');
+                searchInput.blur();
+            }
+        });
+        
+        // Mobile menu
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('hidden');
+        });
+        
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.add('hidden');
+        });
+        
+        // Load initial content
+        loadContent('README.md');
+        highlightActiveFile('README.md');
+    }
+
+    // Start
+    init();
+    </script>
+</body>
+</html>
