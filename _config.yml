@@ -8,7 +8,6 @@ kramdown:
 
 defaults:
   - scope:
-      path: ""
-      type: "pages"
+      path: "DevOps/09-ansible"
     values:
       render_with_liquid: false
