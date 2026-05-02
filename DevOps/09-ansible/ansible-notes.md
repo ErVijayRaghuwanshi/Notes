@@ -1,4 +1,5 @@
 ---
+title: Ansible Notes
 layout: default
 render_with_liquid: false
 ---
