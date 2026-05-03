@@ -1,3 +1,8 @@
+---
+title: Monitoring Notes
+layout: default
+render_with_liquid: false
+---
 # Monitoring & Observability — DevOps Interview Preparation Notes
 
 ---

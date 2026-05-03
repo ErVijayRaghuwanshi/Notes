@@ -1,3 +1,8 @@
+---
+title: AWS vs Azure Notes
+layout: default
+render_with_liquid: false
+---
 # AWS vs Azure — DevOps Interview Preparation Notes
 
 ## 1. Introduction

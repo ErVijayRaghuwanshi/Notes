@@ -1,3 +1,8 @@
+---
+title: Scenario-Based Questions
+layout: default
+render_with_liquid: false
+---
 # 🎯 Scenario-Based DevOps Interview Questions
 
 ---

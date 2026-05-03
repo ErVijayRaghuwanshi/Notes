@@ -1,3 +1,8 @@
+---
+title: Networking Notes
+layout: default
+render_with_liquid: false
+---
 # 🌐 Networking – DevOps Notes
 
 ---

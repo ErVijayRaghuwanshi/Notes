@@ -1,3 +1,8 @@
+---
+title: Azure Notes
+layout: default
+render_with_liquid: false
+---
 # Microsoft Azure — DevOps Interview Preparation Notes
 
 ---

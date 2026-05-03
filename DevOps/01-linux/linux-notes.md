@@ -1,3 +1,8 @@
+---
+title: Linux Notes
+layout: default
+render_with_liquid: false
+---
 # 🐧 Linux – DevOps Notes
 
 ---

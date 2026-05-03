@@ -1,3 +1,8 @@
+---
+title: Terraform Notes
+layout: default
+render_with_liquid: false
+---
 # Terraform — DevOps Interview Preparation Notes
 
 ---

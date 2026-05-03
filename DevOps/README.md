@@ -1,3 +1,8 @@
+---
+title: DevOps Notes
+layout: default
+render_with_liquid: false
+---
 # 🚀 DevOps Interview Preparation Notes
 
 > A comprehensive collection of DevOps concepts, practical examples, cheat sheets, hands-on labs, real-world scenarios, and **50 interview Q&A per section** — organized for systematic study.

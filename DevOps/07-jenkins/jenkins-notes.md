@@ -1,3 +1,8 @@
+---
+title: Jenkins Notes
+layout: default
+render_with_liquid: false
+---
 # Jenkins – DevOps Interview Preparation Notes
 
 ---

@@ -1,3 +1,8 @@
+---
+title: Git Notes
+layout: default
+render_with_liquid: false
+---
 # 🔀 Git – DevOps Notes
 
 ---

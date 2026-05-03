@@ -1,3 +1,8 @@
+---
+title: GitOps Notes
+layout: default
+render_with_liquid: false
+---
 # GitOps – Comprehensive DevOps Interview Preparation Notes
 
 ---

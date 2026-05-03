@@ -1,3 +1,8 @@
+---
+title: Technical Questions
+layout: default
+render_with_liquid: false
+---
 # ⚡ Rapid-Fire Technical DevOps Questions
 
 Cross-topic technical questions testing breadth of DevOps knowledge. Keep answers concise — interviewers want to see you can cover many topics quickly.

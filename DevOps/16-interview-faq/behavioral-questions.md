@@ -1,3 +1,8 @@
+---
+title: Behavioral Questions
+layout: default
+render_with_liquid: false
+---
 # 🤝 Behavioral DevOps Interview Questions (STAR Method)
 
 ## Introduction

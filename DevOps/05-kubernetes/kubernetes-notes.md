@@ -1,3 +1,8 @@
+---
+title: Kubernetes Notes
+layout: default
+render_with_liquid: false
+---
 # ☸️ Kubernetes – DevOps Notes
 
 ---

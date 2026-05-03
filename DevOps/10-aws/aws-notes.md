@@ -1,3 +1,8 @@
+---
+title: AWS Notes
+layout: default
+render_with_liquid: false
+---
 # AWS (Amazon Web Services) — DevOps Interview Preparation Notes
 
 ---

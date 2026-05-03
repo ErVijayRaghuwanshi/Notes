@@ -1,3 +1,8 @@
+---
+title: CI/CD Notes
+layout: default
+render_with_liquid: false
+---
 # CI/CD – DevOps Interview Preparation Notes
 
 ---

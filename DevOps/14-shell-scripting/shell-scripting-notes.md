@@ -1,3 +1,8 @@
+---
+title: Shell Scripting Notes
+layout: default
+render_with_liquid: false
+---
 # 📜 Shell Scripting – DevOps Notes
 
 ---
