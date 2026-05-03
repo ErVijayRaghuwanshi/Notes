@@ -3,6 +3,7 @@ title: CI/CD Notes
 layout: default
 render_with_liquid: false
 ---
+{% raw %}
 # CI/CD – DevOps Interview Preparation Notes
 
 ---
@@ -1233,3 +1234,4 @@ deploy:
 ---
 
 *Last updated: April 2026*
+{% endraw %}

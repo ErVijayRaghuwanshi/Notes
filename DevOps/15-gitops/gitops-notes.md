@@ -3,6 +3,7 @@ title: GitOps Notes
 layout: default
 render_with_liquid: false
 ---
+{% raw %}
 # GitOps – Comprehensive DevOps Interview Preparation Notes
 
 ---
@@ -1625,3 +1626,4 @@ resources.limits.cpu: 500m          resources.limits.cpu: 1000m
 ---
 
 *Last updated: April 2026*
+{% endraw %}

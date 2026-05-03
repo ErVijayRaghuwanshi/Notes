@@ -3,6 +3,7 @@ title: Ansible Notes
 layout: default
 render_with_liquid: false
 ---
+{% raw %}
 # Ansible — DevOps Interview Preparation Notes
 
 ---
@@ -1746,3 +1747,4 @@ ansible-project/
 ---
 
 *End of Ansible DevOps Interview Notes*
+{% endraw %}

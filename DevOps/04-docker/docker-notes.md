@@ -3,6 +3,7 @@ title: Docker Notes
 layout: default
 render_with_liquid: false
 ---
+{% raw %}
 # 🐳 Docker – DevOps Notes
 
 ---
@@ -859,3 +860,4 @@ docker images --format "{{.Repository}}:{{.Tag}}\t{{.Size}}" | sort -k2 -h
 ---
 
 *Last updated: April 2026*
+{% endraw %}

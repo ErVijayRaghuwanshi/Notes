@@ -3,6 +3,7 @@ title: Monitoring Notes
 layout: default
 render_with_liquid: false
 ---
+{% raw %}
 # Monitoring & Observability — DevOps Interview Preparation Notes
 
 ---
@@ -1597,3 +1598,4 @@ sum(rate(http_requests_total{status=~"5.."}[6h])) / sum(rate(http_requests_total
 ---
 
 *End of Monitoring & Observability Notes*
+{% endraw %}
