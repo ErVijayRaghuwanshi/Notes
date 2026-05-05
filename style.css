@@ -379,21 +379,22 @@ body {
 }
 
 .sidebar.collapsed ~ .left-panel-toggle {
-    left: -10px;
+    left: 0px;
 }
 
 .left-panel-toggle .toggle-chevron {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotate(180deg);
 }
 
 .sidebar.collapsed ~ .left-panel-toggle .toggle-chevron {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
 }
 
 /* Right Panel Toggle (ToC) */
 #tocToggle {
     position: fixed;
-    right: calc(256px - 10px);
+    right: 256px;
     top: 30%;
     width: 20px;
     height: 20px;
@@ -416,6 +417,7 @@ body {
 
 #tocToggle .toc-chevron {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotate(0deg);
 }
 
 #tocSidebar.collapsed #tocToggle .toc-chevron {
@@ -432,7 +434,7 @@ body {
 }
 
 #tocSidebar.collapsed #tocToggle {
-    right: -10px;
+    right: 0px;
 }
 
 /* Code Block Copy Button */
