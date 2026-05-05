@@ -223,7 +223,7 @@ body {
 
 .markdown-body pre code {
     background: none !important;
-    padding: 1rem !important;
+    padding: 0 !important;
     color: #e2e8f0;
     font-size: 0.9em;
 }
