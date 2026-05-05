@@ -588,6 +588,7 @@ async function loadContent(path, type = 'file') {
                     </div>
                 `;
             updateBreadcrumb(path);
+            updateHash(path);
             contentArea.style.opacity = '1';
             return;
         }
@@ -627,14 +628,21 @@ async function loadContent(path, type = 'file') {
                     let newPath = basePath + href;
                     // Normalize path
                     newPath = newPath.replace(/\/\.\//g, '/').replace(/[^/]+\/\.\.\//g, '');
+                    // If path ends with /, it's a folder - append README.md
+                    if (newPath.endsWith('/')) {
+                        newPath += 'README.md';
+                    }
                     loadContent(newPath);
                     highlightActiveFile(newPath);
+                    updateHash(newPath);
                 });
             }
         });
 
         updateBreadcrumb(path);
         currentPath = path;
+
+        updateHash(path);
 
         // Scroll to top
         window.scrollTo(0, 0);
@@ -835,7 +843,13 @@ function generateTableOfContents() {
 
         const item = document.createElement('li');
         item.className = `toc-item level-${level}`;
-        item.innerHTML = `<a href="#${id}">${heading.textContent}</a>`;
+        item.innerHTML = `<a>${heading.textContent}</a>`;
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            updateHash(currentPath, id);
+            heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
         list.appendChild(item);
     });
 
@@ -849,6 +863,31 @@ function updateProgress() {
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (scrollTop / docHeight) * 100;
     progressBar.style.width = `${progress}%`;
+}
+
+// Hash-based routing
+let updatingHash = false;
+
+function updateHash(path, headingId) {
+    updatingHash = true;
+    window.location.hash = headingId ? `${path}~${headingId}` : path;
+    setTimeout(() => { updatingHash = false; }, 100);
+}
+
+function getPathFromHash() {
+    const raw = window.location.hash.slice(1);
+    if (!raw) return null;
+    const sep = raw.indexOf('~');
+    const filePath = sep > -1 ? raw.slice(0, sep) : raw;
+    const headingId = sep > -1 ? raw.slice(sep + 1) : null;
+    const file = allFiles.find(f => f.path === filePath);
+    return file ? { file, headingId } : null;
+}
+
+function scrollToHeading(headingId) {
+    if (!headingId) return;
+    const el = document.getElementById(headingId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Toggle sidebar
@@ -1006,9 +1045,31 @@ function init() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Load initial content
-    loadContent('README.md');
-    highlightActiveFile('README.md');
+    // Hash-based routing: restore from URL or load default
+    const hashData = getPathFromHash();
+    if (hashData) {
+        loadContent(hashData.file.path, hashData.file.type);
+        highlightActiveFile(hashData.file.path);
+        if (hashData.headingId) {
+            setTimeout(() => scrollToHeading(hashData.headingId), 300);
+        }
+    } else {
+        loadContent('README.md');
+        highlightActiveFile('README.md');
+    }
+
+    // Handle browser back/forward
+    window.addEventListener('hashchange', () => {
+        if (updatingHash) return;
+        const data = getPathFromHash();
+        if (data) {
+            loadContent(data.file.path, data.file.type);
+            highlightActiveFile(data.file.path);
+            if (data.headingId) {
+                setTimeout(() => scrollToHeading(data.headingId), 300);
+            }
+        }
+    });
 }
 
 // Start
