@@ -1,6 +1,8 @@
-# Computer Science Fundamentals
+# 💻 Computer Science Fundamentals
 
-Core computer science concepts essential for SDE2 interviews and professional development.
+> Core computer science concepts essential for SDE2 interviews and professional development.
+
+---
 
 ## 📚 Contents
 
@@ -28,6 +30,8 @@ Core computer science concepts essential for SDE2 interviews and professional de
 - Graph Algorithms (BFS, DFS, Dijkstra)
 - Backtracking
 
+---
+
 ## 🎯 Learning Path
 
 1. **Start with Design Patterns** - Understand SOLID principles and how they apply to real-world code
@@ -35,6 +39,8 @@ Core computer science concepts essential for SDE2 interviews and professional de
 3. **Master Data Structures** - Build strong foundation in fundamental data structures
 4. **Practice Algorithms** - Solve problems using different algorithmic approaches
 5. **Apply to Projects** - Use these concepts in your backend/data engineering work
+
+---
 
 ## 💡 Interview Tips
 
@@ -44,7 +50,10 @@ Core computer science concepts essential for SDE2 interviews and professional de
 - **Algorithms**: Practice explaining your thought process while coding
 - **Trade-offs**: Always discuss pros/cons of different approaches
 
+---
+
 ## 🔗 Related Topics
 
 - [Backend Development](../02-backend-development/) - Apply these patterns in FastAPI
-- [System Design](../SystemDesign/README.md) - Use these fundamentals in architecture decisions
+- [System Design](../04-system-design/) - Use these fundamentals in architecture decisions
+- [Big Data Engineering](../03-big-data-engineering/) - Algorithm optimization for data processing

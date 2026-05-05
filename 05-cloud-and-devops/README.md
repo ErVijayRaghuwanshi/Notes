@@ -1,119 +1,59 @@
-# Cloud & DevOps
+---
+title: DevOps Notes
+layout: default
+render_with_liquid: false
+---
+# 🚀 DevOps Interview Preparation Notes
 
-Container orchestration, CI/CD pipelines, and cloud infrastructure for deploying and managing production applications.
+> A comprehensive collection of DevOps concepts, practical examples, cheat sheets, hands-on labs, real-world scenarios, and **50 interview Q&A per section** — organized for systematic study.
 
-## 📚 Contents
+---
 
-### Kubernetes (Coming Soon)
-- Pod, Deployment, Service concepts
-- ConfigMaps & Secrets
-- Ingress & Load Balancing
-- StatefulSets & Persistent Volumes
-- Helm Charts
-- Kustomize
-- Monitoring with Prometheus
+## 📚 Table of Contents
 
-### Docker (Coming Soon)
-- Dockerfile best practices
-- Multi-stage builds
-- Docker Compose
-- Container networking
-- Volume management
-- Image optimization
+| # | Section | Topics Covered |
+|---|---------|---------------|
+| 01 | [Linux](01-linux/linux-notes.md) | File system, commands, permissions, systemd, cron, SSH, storage |
+| 02 | [Networking](02-networking/networking-notes.md) | OSI/TCP-IP, DNS, subnetting, load balancing, firewalls, VPN |
+| 03 | [Git](03-git/git-notes.md) | Branching, merging, rebase, workflows, stash, tags |
+| 04 | [Docker](04-docker/docker-notes.md) | Dockerfile, Compose, volumes, networking, multi-stage builds |
+| 05 | [Kubernetes](05-kubernetes/kubernetes-notes.md) | Pods, Deployments, Services, Ingress, RBAC, Helm, HPA |
+| 06 | [CI/CD](06-ci-cd/ci-cd-notes.md) | Pipelines, GitHub Actions, GitLab CI, blue-green, canary |
+| 07 | [Jenkins](07-jenkins/jenkins-notes.md) | Jenkinsfile, shared libraries, plugins, distributed builds |
+| 08 | [Terraform](08-terraform/terraform-notes.md) | HCL, providers, modules, state, workspaces, Terragrunt |
+| 09 | [Ansible](09-ansible/ansible-notes.md) | Playbooks, roles, Jinja2, vault, Galaxy, AWX |
+| 10 | [AWS](10-aws/aws-notes.md) | EC2, S3, VPC, IAM, Lambda, EKS, CloudFormation |
+| 11 | [Azure](11-azure/azure-notes.md) | VMs, AKS, VNet, Entra ID, Functions, Bicep, DevOps |
+| 12 | [AWS vs Azure](12-aws-vs-azure/aws-vs-azure-notes.md) | 30+ service comparison, pricing, certifications |
+| 13 | [Monitoring](13-monitoring/monitoring-notes.md) | Prometheus, Grafana, ELK, tracing, alerting, PromQL |
+| 14 | [Shell Scripting](14-shell-scripting/shell-scripting-notes.md) | Bash, variables, loops, functions, error handling |
+| 15 | [GitOps](15-gitops/gitops-notes.md) | ArgoCD, FluxCD, pull model, Sealed Secrets, SOPS |
+| 16 | Interview FAQ | [Scenario-based](16-interview-faq/scenario-based-questions.md) · [Behavioral](16-interview-faq/behavioral-questions.md) · [Technical](16-interview-faq/technical-questions.md) |
 
-### CI/CD (Coming Soon)
-- GitHub Actions
-- GitLab CI
-- Jenkins pipelines
-- Deployment strategies (blue-green, canary)
-- Testing in pipelines
-- Security scanning
+---
 
-## 🎯 Learning Path
+## 🎯 Recommended Study Order
 
-### Beginner
-1. **Docker Basics** → Containers, images, Dockerfile
-2. **Docker Compose** → Multi-container applications
-3. **K8s Fundamentals** → Pods, deployments, services
-4. **Basic CI/CD** → Automated testing and deployment
+```
+Phase 1: Foundations        → Linux, Networking, Git, Shell Scripting
+Phase 2: Containers         → Docker, Kubernetes
+Phase 3: CI/CD & GitOps     → CI/CD, Jenkins, GitOps
+Phase 4: IaC                → Terraform, Ansible
+Phase 5: Cloud & Monitoring → AWS, Azure, AWS vs Azure, Monitoring
+Phase 6: Interview Prep     → Scenario, Behavioral, Technical Q&A
+```
 
-### Intermediate
-1. **K8s Networking** → Ingress, service mesh
-2. **Configuration Management** → ConfigMaps, secrets
-3. **Helm/Kustomize** → Package management
-4. **Monitoring** → Prometheus, Grafana
+## 📝 Each Section Contains
 
-### Advanced
-1. **StatefulSets** → Databases on K8s
-2. **Operators** → Custom resource management
-3. **GitOps** → ArgoCD, FluxCD
-4. **Multi-cluster** → Federation, disaster recovery
+| Component | Description |
+|-----------|-------------|
+| **Core Concepts** | Key topics with explanations and diagrams |
+| **Practical Examples** | Commands, configs, and code snippets |
+| **Cheat Sheet** | Quick reference table |
+| **Hands-on Labs** | 3–5 step-by-step exercises |
+| **Real-world Scenarios** | 2–3 production scenarios with solutions |
+| **Interview Q&A (50)** | Basic (1–15), Intermediate (16–35), Advanced (36–50) |
 
-## 💡 Interview Topics
+---
 
-### Kubernetes
-- **Pod vs Deployment**: When to use each
-- **Service Types**: ClusterIP, NodePort, LoadBalancer
-- **Scaling**: HPA, VPA, cluster autoscaler
-- **Storage**: PV, PVC, StorageClass
-- **Security**: RBAC, network policies, pod security
-
-### Docker
-- **Image Layers**: How they work, optimization
-- **Multi-stage Builds**: Reduce image size
-- **Networking**: Bridge, host, overlay networks
-- **Volumes**: Bind mounts vs volumes
-- **Security**: Image scanning, non-root users
-
-### CI/CD
-- **Pipeline Stages**: Build, test, deploy
-- **Deployment Strategies**: Rolling, blue-green, canary
-- **Secrets Management**: Vault, sealed secrets
-- **Testing**: Unit, integration, smoke tests
-- **Rollback**: Strategies and automation
-
-## 🏗️ Best Practices
-
-### Docker
-- Use official base images
-- Multi-stage builds for smaller images
-- Run as non-root user
-- Use .dockerignore
-- Pin versions (avoid :latest)
-- Scan for vulnerabilities
-
-### Kubernetes
-- Set resource requests/limits
-- Use health checks (liveness, readiness)
-- Implement proper logging
-- Use namespaces for isolation
-- Apply RBAC policies
-- Regular security updates
-
-### CI/CD
-- Fail fast (run quick tests first)
-- Parallel execution where possible
-- Cache dependencies
-- Automated rollback on failure
-- Environment parity (dev/staging/prod)
-- Audit logs for deployments
-
-## 📊 Common Patterns
-
-### Deployment Patterns
-- **Rolling Update**: Gradual replacement of pods
-- **Blue-Green**: Switch between two environments
-- **Canary**: Test with small percentage of traffic
-- **A/B Testing**: Compare different versions
-
-### Scaling Patterns
-- **Horizontal Pod Autoscaler**: Scale based on CPU/memory
-- **Vertical Pod Autoscaler**: Adjust resource requests
-- **Cluster Autoscaler**: Add/remove nodes
-- **KEDA**: Event-driven autoscaling
-
-## 🔗 Related Topics
-
-- [Backend Development](../02-backend-development/) - FastAPI K8s deployment
-- [System Design](../SystemDesign/README.md) - Infrastructure architecture
-- [Big Data Engineering](../BigData/README.md) - Spark on K8s and data-platform operations
+*Last updated: April 2026*

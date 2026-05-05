@@ -1,6 +1,8 @@
-# Backend Development
+# ⚙️ Backend Development
 
-Production-ready backend development patterns, frameworks, and best practices for building scalable APIs and microservices.
+> Production-ready backend development patterns, frameworks, and best practices for building scalable APIs and microservices.
+
+---
 
 ## 📚 Contents
 
@@ -14,6 +16,8 @@ Production-ready backend development patterns, frameworks, and best practices fo
 
 ### Databases
 - **[Database Design](databases/Database_Design.md)** - Normalization, relationships, and optimization
+
+---
 
 ## 🎯 Learning Path
 
@@ -29,20 +33,18 @@ Production-ready backend development patterns, frameworks, and best practices fo
 3. **Middleware** → Request/response processing
 4. **K8s Deployment** → Production deployment
 
-## 💡 Interview Topics
+---
 
-### Common Questions
+## 💡 Interview Tips
+
 - **FastAPI vs Flask/Django**: When to use each framework
 - **JWT Authentication**: Token generation, validation, refresh strategies
 - **Middleware**: Request lifecycle, custom middleware patterns
 - **Database Design**: Normalization forms, indexing strategies
 - **API Gateway**: Benefits, when to use, Kong vs alternatives
+- **Coding Challenges**: Implement JWT auth, rate-limiting middleware, optimize queries
 
-### Coding Challenges
-- Implement JWT authentication from scratch
-- Design a rate-limiting middleware
-- Optimize slow database queries
-- Design RESTful API for complex domain
+---
 
 ## 🏗️ Architecture Patterns
 
@@ -51,8 +53,11 @@ Production-ready backend development patterns, frameworks, and best practices fo
 - **SOLID Principles**: Applied to API design
 - **12-Factor App**: Configuration, logging, statelessness
 
+---
+
 ## 🔗 Related Topics
 
 - [Computer Science Fundamentals](../01-computer-science-fundamentals/) - SOLID principles
-- [System Design](../SystemDesign/README.md) - Microservices patterns
+- [System Design](../04-system-design/) - Microservices patterns
 - [Cloud & DevOps](../05-cloud-and-devops/) - Kubernetes deployment
+- [Big Data Engineering](../03-big-data-engineering/) - Data platform integration
