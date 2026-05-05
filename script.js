@@ -62,6 +62,84 @@ const fileTree = {
             children: [
                 { name: 'README.md', type: 'file', path: '03-big-data-engineering/README.md' },
                 {
+                    name: '01-hadoop-and-ecosystem', type: 'folder', children: [
+                        { name: 'hadoop-and-ecosystem-notes.md', type: 'file', path: '03-big-data-engineering/01-hadoop-and-ecosystem/hadoop-and-ecosystem-notes.md' }
+                    ]
+                },
+                {
+                    name: '02-hdfs', type: 'folder', children: [
+                        { name: 'hdfs-notes.md', type: 'file', path: '03-big-data-engineering/02-hdfs/hdfs-notes.md' }
+                    ]
+                },
+                {
+                    name: '03-spark-core', type: 'folder', children: [
+                        { name: 'spark-core-notes.md', type: 'file', path: '03-big-data-engineering/03-spark-core/spark-core-notes.md' }
+                    ]
+                },
+                {
+                    name: '04-spark-sql-and-optimization', type: 'folder', children: [
+                        { name: 'spark-sql-and-optimization-notes.md', type: 'file', path: '03-big-data-engineering/04-spark-sql-and-optimization/spark-sql-and-optimization-notes.md' }
+                    ]
+                },
+                {
+                    name: '05-spark-structured-streaming', type: 'folder', children: [
+                        { name: 'spark-structured-streaming-notes.md', type: 'file', path: '03-big-data-engineering/05-spark-structured-streaming/spark-structured-streaming-notes.md' }
+                    ]
+                },
+                {
+                    name: '06-kafka', type: 'folder', children: [
+                        { name: 'kafka-notes.md', type: 'file', path: '03-big-data-engineering/06-kafka/kafka-notes.md' }
+                    ]
+                },
+                {
+                    name: '07-airflow-and-orchestration', type: 'folder', children: [
+                        { name: 'airflow-and-orchestration-notes.md', type: 'file', path: '03-big-data-engineering/07-airflow-and-orchestration/airflow-and-orchestration-notes.md' }
+                    ]
+                },
+                {
+                    name: '08-delta-lake-and-delta-tables', type: 'folder', children: [
+                        { name: 'delta-lake-and-delta-tables-notes.md', type: 'file', path: '03-big-data-engineering/08-delta-lake-and-delta-tables/delta-lake-and-delta-tables-notes.md' }
+                    ]
+                },
+                {
+                    name: '09-spark-4-1-and-sdp', type: 'folder', children: [
+                        { name: 'spark-4-1-and-sdp-notes.md', type: 'file', path: '03-big-data-engineering/09-spark-4-1-and-sdp/spark-4-1-and-sdp-notes.md' }
+                    ]
+                },
+                {
+                    name: '10-hive-and-metastore', type: 'folder', children: [
+                        { name: 'hive-and-metastore-notes.md', type: 'file', path: '03-big-data-engineering/10-hive-and-metastore/hive-and-metastore-notes.md' }
+                    ]
+                },
+                {
+                    name: '11-solr', type: 'folder', children: [
+                        { name: 'solr-notes.md', type: 'file', path: '03-big-data-engineering/11-solr/solr-notes.md' }
+                    ]
+                },
+                {
+                    name: '12-iceberg-and-open-table-formats', type: 'folder', children: [
+                        { name: 'iceberg-and-open-table-formats-notes.md', type: 'file', path: '03-big-data-engineering/12-iceberg-and-open-table-formats/iceberg-and-open-table-formats-notes.md' }
+                    ]
+                },
+                {
+                    name: '13-trino-and-interactive-querying', type: 'folder', children: [
+                        { name: 'trino-and-interactive-querying-notes.md', type: 'file', path: '03-big-data-engineering/13-trino-and-interactive-querying/trino-and-interactive-querying-notes.md' }
+                    ]
+                },
+                {
+                    name: '14-data-platform-architecture', type: 'folder', children: [
+                        { name: 'data-platform-architecture-notes.md', type: 'file', path: '03-big-data-engineering/14-data-platform-architecture/data-platform-architecture-notes.md' },
+                        { name: 'yaml-pipelines-dlt-dbt-trino.md', type: 'file', path: '03-big-data-engineering/14-data-platform-architecture/yaml-pipelines-dlt-dbt-trino.md' }
+                    ]
+                },
+                {
+                    name: '15-interview-faq', type: 'folder', children: [
+                        { name: 'behavioral-questions.md', type: 'file', path: '03-big-data-engineering/15-interview-faq/behavioral-questions.md' },
+                        { name: 'scenario-based-questions.md', type: 'file', path: '03-big-data-engineering/15-interview-faq/scenario-based-questions.md' },
+                        { name: 'technical-questions.md', type: 'file', path: '03-big-data-engineering/15-interview-faq/technical-questions.md' }
+                    ]
+                },
+                {
                     name: 'spark',
                     type: 'folder',
                     children: [
@@ -88,273 +166,188 @@ const fileTree = {
             ]
         },
         {
-            name: 'BigData',
+            name: '04-system-design',
             type: 'folder',
             children: [
-                { name: 'README.md', type: 'file', path: 'BigData/README.md' },
-                {
-                    name: '01-hadoop-and-ecosystem', type: 'folder', children: [
-                        { name: 'hadoop-and-ecosystem-notes.md', type: 'file', path: 'BigData/01-hadoop-and-ecosystem/hadoop-and-ecosystem-notes.md' }
-                    ]
-                },
-                {
-                    name: '02-hdfs', type: 'folder', children: [
-                        { name: 'hdfs-notes.md', type: 'file', path: 'BigData/02-hdfs/hdfs-notes.md' }
-                    ]
-                },
-                {
-                    name: '03-spark-core', type: 'folder', children: [
-                        { name: 'spark-core-notes.md', type: 'file', path: 'BigData/03-spark-core/spark-core-notes.md' }
-                    ]
-                },
-                {
-                    name: '04-spark-sql-and-optimization', type: 'folder', children: [
-                        { name: 'spark-sql-and-optimization-notes.md', type: 'file', path: 'BigData/04-spark-sql-and-optimization/spark-sql-and-optimization-notes.md' }
-                    ]
-                },
-                {
-                    name: '05-spark-structured-streaming', type: 'folder', children: [
-                        { name: 'spark-structured-streaming-notes.md', type: 'file', path: 'BigData/05-spark-structured-streaming/spark-structured-streaming-notes.md' }
-                    ]
-                },
-                {
-                    name: '06-kafka', type: 'folder', children: [
-                        { name: 'kafka-notes.md', type: 'file', path: 'BigData/06-kafka/kafka-notes.md' }
-                    ]
-                },
-                {
-                    name: '07-airflow-and-orchestration', type: 'folder', children: [
-                        { name: 'airflow-and-orchestration-notes.md', type: 'file', path: 'BigData/07-airflow-and-orchestration/airflow-and-orchestration-notes.md' }
-                    ]
-                },
-                {
-                    name: '08-delta-lake-and-delta-tables', type: 'folder', children: [
-                        { name: 'delta-lake-and-delta-tables-notes.md', type: 'file', path: 'BigData/08-delta-lake-and-delta-tables/delta-lake-and-delta-tables-notes.md' }
-                    ]
-                },
-                {
-                    name: '09-spark-4-1-and-sdp', type: 'folder', children: [
-                        { name: 'spark-4-1-and-sdp-notes.md', type: 'file', path: 'BigData/09-spark-4-1-and-sdp/spark-4-1-and-sdp-notes.md' }
-                    ]
-                },
-                {
-                    name: '10-hive-and-metastore', type: 'folder', children: [
-                        { name: 'hive-and-metastore-notes.md', type: 'file', path: 'BigData/10-hive-and-metastore/hive-and-metastore-notes.md' }
-                    ]
-                },
-                {
-                    name: '11-solr', type: 'folder', children: [
-                        { name: 'solr-notes.md', type: 'file', path: 'BigData/11-solr/solr-notes.md' }
-                    ]
-                },
-                {
-                    name: '12-iceberg-and-open-table-formats', type: 'folder', children: [
-                        { name: 'iceberg-and-open-table-formats-notes.md', type: 'file', path: 'BigData/12-iceberg-and-open-table-formats/iceberg-and-open-table-formats-notes.md' }
-                    ]
-                },
-                {
-                    name: '13-trino-and-interactive-querying', type: 'folder', children: [
-                        { name: 'trino-and-interactive-querying-notes.md', type: 'file', path: 'BigData/13-trino-and-interactive-querying/trino-and-interactive-querying-notes.md' }
-                    ]
-                },
-                {
-                    name: '14-data-platform-architecture', type: 'folder', children: [
-                        { name: 'data-platform-architecture-notes.md', type: 'file', path: 'BigData/14-data-platform-architecture/data-platform-architecture-notes.md' },
-                        { name: 'yaml-pipelines-dlt-dbt-trino.md', type: 'file', path: 'BigData/14-data-platform-architecture/yaml-pipelines-dlt-dbt-trino.md' }
-                    ]
-                },
-                {
-                    name: '15-interview-faq', type: 'folder', children: [
-                        { name: 'behavioral-questions.md', type: 'file', path: 'BigData/15-interview-faq/behavioral-questions.md' },
-                        { name: 'scenario-based-questions.md', type: 'file', path: 'BigData/15-interview-faq/scenario-based-questions.md' },
-                        { name: 'technical-questions.md', type: 'file', path: 'BigData/15-interview-faq/technical-questions.md' }
-                    ]
-                }
-            ]
-        },
-        {
-            name: 'DevOps',
-            type: 'folder',
-            children: [
-                { name: 'README.md', type: 'file', path: 'DevOps/README.md' },
-                {
-                    name: '01-linux', type: 'folder', children: [
-                        { name: 'linux-notes.md', type: 'file', path: 'DevOps/01-linux/linux-notes.md' }
-                    ]
-                },
-                {
-                    name: '02-networking', type: 'folder', children: [
-                        { name: 'networking-notes.md', type: 'file', path: 'DevOps/02-networking/networking-notes.md' }
-                    ]
-                },
-                {
-                    name: '03-git', type: 'folder', children: [
-                        { name: 'git-notes.md', type: 'file', path: 'DevOps/03-git/git-notes.md' }
-                    ]
-                },
-                {
-                    name: '04-docker', type: 'folder', children: [
-                        { name: 'docker-notes.md', type: 'file', path: 'DevOps/04-docker/docker-notes.md' }
-                    ]
-                },
-                {
-                    name: '05-kubernetes', type: 'folder', children: [
-                        { name: 'kubernetes-notes.md', type: 'file', path: 'DevOps/05-kubernetes/kubernetes-notes.md' }
-                    ]
-                },
-                {
-                    name: '06-ci-cd', type: 'folder', children: [
-                        { name: 'ci-cd-notes.md', type: 'file', path: 'DevOps/06-ci-cd/ci-cd-notes.md' }
-                    ]
-                },
-                {
-                    name: '07-jenkins', type: 'folder', children: [
-                        { name: 'jenkins-notes.md', type: 'file', path: 'DevOps/07-jenkins/jenkins-notes.md' }
-                    ]
-                },
-                {
-                    name: '08-terraform', type: 'folder', children: [
-                        { name: 'terraform-notes.md', type: 'file', path: 'DevOps/08-terraform/terraform-notes.md' }
-                    ]
-                },
-                {
-                    name: '09-ansible', type: 'folder', children: [
-                        { name: 'ansible-notes.md', type: 'file', path: 'DevOps/09-ansible/ansible-notes.md' }
-                    ]
-                },
-                {
-                    name: '10-aws', type: 'folder', children: [
-                        { name: 'aws-notes.md', type: 'file', path: 'DevOps/10-aws/aws-notes.md' }
-                    ]
-                },
-                {
-                    name: '11-azure', type: 'folder', children: [
-                        { name: 'azure-notes.md', type: 'file', path: 'DevOps/11-azure/azure-notes.md' }
-                    ]
-                },
-                {
-                    name: '12-aws-vs-azure', type: 'folder', children: [
-                        { name: 'aws-vs-azure-notes.md', type: 'file', path: 'DevOps/12-aws-vs-azure/aws-vs-azure-notes.md' }
-                    ]
-                },
-                {
-                    name: '13-monitoring', type: 'folder', children: [
-                        { name: 'monitoring-notes.md', type: 'file', path: 'DevOps/13-monitoring/monitoring-notes.md' }
-                    ]
-                },
-                {
-                    name: '14-shell-scripting', type: 'folder', children: [
-                        { name: 'shell-scripting-notes.md', type: 'file', path: 'DevOps/14-shell-scripting/shell-scripting-notes.md' }
-                    ]
-                },
-                {
-                    name: '15-gitops', type: 'folder', children: [
-                        { name: 'gitops-notes.md', type: 'file', path: 'DevOps/15-gitops/gitops-notes.md' }
-                    ]
-                },
-                {
-                    name: '16-interview-faq', type: 'folder', children: [
-                        { name: 'behavioral-questions.md', type: 'file', path: 'DevOps/16-interview-faq/behavioral-questions.md' },
-                        { name: 'scenario-based-questions.md', type: 'file', path: 'DevOps/16-interview-faq/scenario-based-questions.md' },
-                        { name: 'technical-questions.md', type: 'file', path: 'DevOps/16-interview-faq/technical-questions.md' }
-                    ]
-                }
-            ]
-        },
-        {
-            name: 'SystemDesign',
-            type: 'folder',
-            children: [
-                { name: 'README.md', type: 'file', path: 'SystemDesign/README.md' },
+                { name: 'README.md', type: 'file', path: '04-system-design/README.md' },
                 {
                     name: '01-scalability-basics', type: 'folder', children: [
-                        { name: 'scalability-basics-notes.md', type: 'file', path: 'SystemDesign/01-scalability-basics/scalability-basics-notes.md' }
+                        { name: 'scalability-basics-notes.md', type: 'file', path: '04-system-design/01-scalability-basics/scalability-basics-notes.md' }
                     ]
                 },
                 {
                     name: '02-networking-and-communication', type: 'folder', children: [
-                        { name: 'networking-and-communication-notes.md', type: 'file', path: 'SystemDesign/02-networking-and-communication/networking-and-communication-notes.md' }
+                        { name: 'networking-and-communication-notes.md', type: 'file', path: '04-system-design/02-networking-and-communication/networking-and-communication-notes.md' }
                     ]
                 },
                 {
                     name: '03-storage-systems', type: 'folder', children: [
-                        { name: 'storage-systems-notes.md', type: 'file', path: 'SystemDesign/03-storage-systems/storage-systems-notes.md' }
+                        { name: 'storage-systems-notes.md', type: 'file', path: '04-system-design/03-storage-systems/storage-systems-notes.md' }
                     ]
                 },
                 {
                     name: '04-databases', type: 'folder', children: [
-                        { name: 'databases-notes.md', type: 'file', path: 'SystemDesign/04-databases/databases-notes.md' }
+                        { name: 'databases-notes.md', type: 'file', path: '04-system-design/04-databases/databases-notes.md' }
                     ]
                 },
                 {
                     name: '05-caching', type: 'folder', children: [
-                        { name: 'caching-notes.md', type: 'file', path: 'SystemDesign/05-caching/caching-notes.md' }
+                        { name: 'caching-notes.md', type: 'file', path: '04-system-design/05-caching/caching-notes.md' }
                     ]
                 },
                 {
                     name: '06-messaging-and-stream-processing', type: 'folder', children: [
-                        { name: 'messaging-and-stream-processing-notes.md', type: 'file', path: 'SystemDesign/06-messaging-and-stream-processing/messaging-and-stream-processing-notes.md' }
+                        { name: 'messaging-and-stream-processing-notes.md', type: 'file', path: '04-system-design/06-messaging-and-stream-processing/messaging-and-stream-processing-notes.md' }
                     ]
                 },
                 {
                     name: '07-api-design-and-gateways', type: 'folder', children: [
-                        { name: 'api-design-and-gateways-notes.md', type: 'file', path: 'SystemDesign/07-api-design-and-gateways/api-design-and-gateways-notes.md' }
+                        { name: 'api-design-and-gateways-notes.md', type: 'file', path: '04-system-design/07-api-design-and-gateways/api-design-and-gateways-notes.md' }
                     ]
                 },
                 {
                     name: '08-load-balancing-and-proxies', type: 'folder', children: [
-                        { name: 'load-balancing-and-proxies-notes.md', type: 'file', path: 'SystemDesign/08-load-balancing-and-proxies/load-balancing-and-proxies-notes.md' }
+                        { name: 'load-balancing-and-proxies-notes.md', type: 'file', path: '04-system-design/08-load-balancing-and-proxies/load-balancing-and-proxies-notes.md' }
                     ]
                 },
                 {
                     name: '09-consistency-replication-and-partitioning', type: 'folder', children: [
-                        { name: 'consistency-replication-and-partitioning-notes.md', type: 'file', path: 'SystemDesign/09-consistency-replication-and-partitioning/consistency-replication-and-partitioning-notes.md' }
+                        { name: 'consistency-replication-and-partitioning-notes.md', type: 'file', path: '04-system-design/09-consistency-replication-and-partitioning/consistency-replication-and-partitioning-notes.md' }
                     ]
                 },
                 {
                     name: '10-microservices-and-architectural-patterns', type: 'folder', children: [
-                        { name: 'microservices-and-architectural-patterns-notes.md', type: 'file', path: 'SystemDesign/10-microservices-and-architectural-patterns/microservices-and-architectural-patterns-notes.md' }
+                        { name: 'microservices-and-architectural-patterns-notes.md', type: 'file', path: '04-system-design/10-microservices-and-architectural-patterns/microservices-and-architectural-patterns-notes.md' }
                     ]
                 },
                 {
                     name: '11-reliability-resilience-and-fault-tolerance', type: 'folder', children: [
-                        { name: 'reliability-resilience-and-fault-tolerance-notes.md', type: 'file', path: 'SystemDesign/11-reliability-resilience-and-fault-tolerance/reliability-resilience-and-fault-tolerance-notes.md' }
+                        { name: 'reliability-resilience-and-fault-tolerance-notes.md', type: 'file', path: '04-system-design/11-reliability-resilience-and-fault-tolerance/reliability-resilience-and-fault-tolerance-notes.md' }
                     ]
                 },
                 {
                     name: '12-security-and-multi-tenancy', type: 'folder', children: [
-                        { name: 'security-and-multi-tenancy-notes.md', type: 'file', path: 'SystemDesign/12-security-and-multi-tenancy/security-and-multi-tenancy-notes.md' }
+                        { name: 'security-and-multi-tenancy-notes.md', type: 'file', path: '04-system-design/12-security-and-multi-tenancy/security-and-multi-tenancy-notes.md' }
                     ]
                 },
                 {
                     name: '13-observability-capacity-and-performance', type: 'folder', children: [
-                        { name: 'observability-capacity-and-performance-notes.md', type: 'file', path: 'SystemDesign/13-observability-capacity-and-performance/observability-capacity-and-performance-notes.md' }
+                        { name: 'observability-capacity-and-performance-notes.md', type: 'file', path: '04-system-design/13-observability-capacity-and-performance/observability-capacity-and-performance-notes.md' }
                     ]
                 },
                 {
                     name: '14-back-of-the-envelope-estimation', type: 'folder', children: [
-                        { name: 'back-of-the-envelope-estimation-notes.md', type: 'file', path: 'SystemDesign/14-back-of-the-envelope-estimation/back-of-the-envelope-estimation-notes.md' }
+                        { name: 'back-of-the-envelope-estimation-notes.md', type: 'file', path: '04-system-design/14-back-of-the-envelope-estimation/back-of-the-envelope-estimation-notes.md' }
                     ]
                 },
                 {
                     name: '15-case-studies', type: 'folder', children: [
-                        { name: 'README.md', type: 'file', path: 'SystemDesign/15-case-studies/README.md' },
-                        { name: 'chat-system.md', type: 'file', path: 'SystemDesign/15-case-studies/chat-system.md' },
-                        { name: 'file-storage.md', type: 'file', path: 'SystemDesign/15-case-studies/file-storage.md' },
-                        { name: 'news-feed.md', type: 'file', path: 'SystemDesign/15-case-studies/news-feed.md' },
-                        { name: 'notification-system.md', type: 'file', path: 'SystemDesign/15-case-studies/notification-system.md' },
-                        { name: 'rate-limiter.md', type: 'file', path: 'SystemDesign/15-case-studies/rate-limiter.md' },
-                        { name: 'ride-hailing.md', type: 'file', path: 'SystemDesign/15-case-studies/ride-hailing.md' },
-                        { name: 'search-autocomplete.md', type: 'file', path: 'SystemDesign/15-case-studies/search-autocomplete.md' },
-                        { name: 'url-shortener.md', type: 'file', path: 'SystemDesign/15-case-studies/url-shortener.md' },
-                        { name: 'video-streaming.md', type: 'file', path: 'SystemDesign/15-case-studies/video-streaming.md' }
+                        { name: 'README.md', type: 'file', path: '04-system-design/15-case-studies/README.md' },
+                        { name: 'chat-system.md', type: 'file', path: '04-system-design/15-case-studies/chat-system.md' },
+                        { name: 'file-storage.md', type: 'file', path: '04-system-design/15-case-studies/file-storage.md' },
+                        { name: 'news-feed.md', type: 'file', path: '04-system-design/15-case-studies/news-feed.md' },
+                        { name: 'notification-system.md', type: 'file', path: '04-system-design/15-case-studies/notification-system.md' },
+                        { name: 'rate-limiter.md', type: 'file', path: '04-system-design/15-case-studies/rate-limiter.md' },
+                        { name: 'ride-hailing.md', type: 'file', path: '04-system-design/15-case-studies/ride-hailing.md' },
+                        { name: 'search-autocomplete.md', type: 'file', path: '04-system-design/15-case-studies/search-autocomplete.md' },
+                        { name: 'url-shortener.md', type: 'file', path: '04-system-design/15-case-studies/url-shortener.md' },
+                        { name: 'video-streaming.md', type: 'file', path: '04-system-design/15-case-studies/video-streaming.md' }
                     ]
                 },
                 {
                     name: '16-interview-faq', type: 'folder', children: [
-                        { name: 'behavioral-questions.md', type: 'file', path: 'SystemDesign/16-interview-faq/behavioral-questions.md' },
-                        { name: 'scenario-based-questions.md', type: 'file', path: 'SystemDesign/16-interview-faq/scenario-based-questions.md' },
-                        { name: 'technical-questions.md', type: 'file', path: 'SystemDesign/16-interview-faq/technical-questions.md' }
+                        { name: 'behavioral-questions.md', type: 'file', path: '04-system-design/16-interview-faq/behavioral-questions.md' },
+                        { name: 'scenario-based-questions.md', type: 'file', path: '04-system-design/16-interview-faq/scenario-based-questions.md' },
+                        { name: 'technical-questions.md', type: 'file', path: '04-system-design/16-interview-faq/technical-questions.md' }
+                    ]
+                }
+            ]
+        },
+        {
+            name: '05-cloud-and-devops',
+            type: 'folder',
+            children: [
+                { name: 'README.md', type: 'file', path: '05-cloud-and-devops/README.md' },
+                {
+                    name: '01-linux', type: 'folder', children: [
+                        { name: 'linux-notes.md', type: 'file', path: '05-cloud-and-devops/01-linux/linux-notes.md' }
+                    ]
+                },
+                {
+                    name: '02-networking', type: 'folder', children: [
+                        { name: 'networking-notes.md', type: 'file', path: '05-cloud-and-devops/02-networking/networking-notes.md' }
+                    ]
+                },
+                {
+                    name: '03-git', type: 'folder', children: [
+                        { name: 'git-notes.md', type: 'file', path: '05-cloud-and-devops/03-git/git-notes.md' }
+                    ]
+                },
+                {
+                    name: '04-docker', type: 'folder', children: [
+                        { name: 'docker-notes.md', type: 'file', path: '05-cloud-and-devops/04-docker/docker-notes.md' }
+                    ]
+                },
+                {
+                    name: '05-kubernetes', type: 'folder', children: [
+                        { name: 'kubernetes-notes.md', type: 'file', path: '05-cloud-and-devops/05-kubernetes/kubernetes-notes.md' }
+                    ]
+                },
+                {
+                    name: '06-ci-cd', type: 'folder', children: [
+                        { name: 'ci-cd-notes.md', type: 'file', path: '05-cloud-and-devops/06-ci-cd/ci-cd-notes.md' }
+                    ]
+                },
+                {
+                    name: '07-jenkins', type: 'folder', children: [
+                        { name: 'jenkins-notes.md', type: 'file', path: '05-cloud-and-devops/07-jenkins/jenkins-notes.md' }
+                    ]
+                },
+                {
+                    name: '08-terraform', type: 'folder', children: [
+                        { name: 'terraform-notes.md', type: 'file', path: '05-cloud-and-devops/08-terraform/terraform-notes.md' }
+                    ]
+                },
+                {
+                    name: '09-ansible', type: 'folder', children: [
+                        { name: 'ansible-notes.md', type: 'file', path: '05-cloud-and-devops/09-ansible/ansible-notes.md' }
+                    ]
+                },
+                {
+                    name: '10-aws', type: 'folder', children: [
+                        { name: 'aws-notes.md', type: 'file', path: '05-cloud-and-devops/10-aws/aws-notes.md' }
+                    ]
+                },
+                {
+                    name: '11-azure', type: 'folder', children: [
+                        { name: 'azure-notes.md', type: 'file', path: '05-cloud-and-devops/11-azure/azure-notes.md' }
+                    ]
+                },
+                {
+                    name: '12-aws-vs-azure', type: 'folder', children: [
+                        { name: 'aws-vs-azure-notes.md', type: 'file', path: '05-cloud-and-devops/12-aws-vs-azure/aws-vs-azure-notes.md' }
+                    ]
+                },
+                {
+                    name: '13-monitoring', type: 'folder', children: [
+                        { name: 'monitoring-notes.md', type: 'file', path: '05-cloud-and-devops/13-monitoring/monitoring-notes.md' }
+                    ]
+                },
+                {
+                    name: '14-shell-scripting', type: 'folder', children: [
+                        { name: 'shell-scripting-notes.md', type: 'file', path: '05-cloud-and-devops/14-shell-scripting/shell-scripting-notes.md' }
+                    ]
+                },
+                {
+                    name: '15-gitops', type: 'folder', children: [
+                        { name: 'gitops-notes.md', type: 'file', path: '05-cloud-and-devops/15-gitops/gitops-notes.md' }
+                    ]
+                },
+                {
+                    name: '16-interview-faq', type: 'folder', children: [
+                        { name: 'behavioral-questions.md', type: 'file', path: '05-cloud-and-devops/16-interview-faq/behavioral-questions.md' },
+                        { name: 'scenario-based-questions.md', type: 'file', path: '05-cloud-and-devops/16-interview-faq/scenario-based-questions.md' },
+                        { name: 'technical-questions.md', type: 'file', path: '05-cloud-and-devops/16-interview-faq/technical-questions.md' }
                     ]
                 }
             ]
@@ -373,6 +366,13 @@ const fileTree = {
                 {
                     name: 'testing', type: 'folder', children: [
                         { name: 'playwright-notes.md', type: 'file', path: '06-specialized-topics/testing/playwright-notes.md' }
+                    ]
+                },
+                {
+                    name: 'tools', type: 'folder', children: [
+                        { name: 'custom-rule-builder', type: 'folder', children: [
+                            { name: 'app.py', type: 'file', path: '06-specialized-topics/tools/custom-rule-builder/app.py' }
+                        ]}
                     ]
                 }
             ]
@@ -406,7 +406,10 @@ const fileTree = {
                         { name: '09-qa-bank.md', type: 'file', path: 'interview-prep/genesys/09-qa-bank.md' },
                         { name: '10-final-revision.md', type: 'file', path: 'interview-prep/genesys/10-final-revision.md' }
                     ]
-                }
+                },
+                { name: 'behavioral', type: 'folder', children: [] },
+                { name: 'coding-patterns', type: 'folder', children: [] },
+                { name: 'quick-reference', type: 'folder', children: [] }
             ]
         },
         { name: 'README.md', type: 'file', path: 'README.md' },
