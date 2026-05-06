@@ -22,13 +22,7 @@
     <!-- Reading Progress Bar -->
     <div id="progressBar" class="progress-bar"></div>
 
-    <!-- Mobile Menu Button -->
-    <button id="menuBtn" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 rounded-lg border border-gray-700">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-    </button>
-
+    <!-- Mobile Menu Button moved to header -->
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full bg-gray-800 border-r border-gray-700 overflow-hidden flex flex-col">
         <!-- Header -->
@@ -79,8 +73,14 @@
     <!-- Main Content -->
     <main class="main-content min-h-screen">
         <!-- Top Bar -->
-        <header class="sticky top-0 bg-gray-900/95 backdrop-blur border-b border-gray-700 px-6 py-3 z-10 flex items-center gap-4">
-            <div id="breadcrumb" class="flex items-center text-sm text-gray-400">
+        <header class="sticky top-0 bg-gray-900/95 backdrop-blur border-b border-gray-700 px-4 md:px-6 py-3 z-10 flex items-center gap-4">
+            <!-- Mobile Menu Button -->
+            <button id="menuBtn" class="md:hidden flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-200 hover:bg-gray-800 rounded-lg transition-colors shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <div id="breadcrumb" class="flex items-center text-sm text-gray-400 overflow-x-auto whitespace-nowrap hide-scrollbar">
                 <span class="breadcrumb-item">Home</span>
             </div>
         </header>
@@ -113,7 +113,7 @@
     </main>
 
     <!-- Command Palette Modal -->
-    <div id="commandPaletteOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-start justify-center pt-[10vh] transition-opacity opacity-0">
+    <div id="commandPaletteOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-start justify-center pt-[10vh] transition-opacity opacity-0 px-4">
         <div id="commandPalette" class="bg-[#1e293b] border border-[#334155] shadow-2xl rounded-xl w-full max-w-2xl overflow-hidden transform scale-95 transition-all duration-200">
             <div class="flex items-center px-4 py-3 border-b border-[#334155]">
                 <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
