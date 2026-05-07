@@ -218,3 +218,42 @@ Use GitHub integration + Automation rule:
 - WIP: `project = ABC AND statusCategory = "In Progress" ORDER BY updated DESC`
 - Unestimated: `project = ABC AND issuetype in (Story, Bug) AND "Story Points" IS EMPTY`
 - High priority bugs: `project = ABC AND issuetype = Bug AND priority in (Highest, High) AND resolution IS EMPTY`
+
+---
+
+## 🧭 Jira Terms & Hierarchy
+
+- **Project**: Container for issues, workflows, permissions, and boards.
+- **Board**: View of issues via a filter. Scrum boards manage sprints; Kanban boards manage continuous flow.
+- **Sprint (Scrum only)**: Timeboxed iteration on a Scrum board; contains a selected subset of issues.
+- **Epic**: Large body of work grouping multiple Stories/Tasks/Bugs.
+- **Story**: User-facing value increment; estimated with story points.
+- **Task**: Non-story work item (engineering/ops). Same lifecycle as a Story.
+- **Bug**: Defect to be fixed, may be estimated and included in sprints.
+- **Sub-task**: Breaks down a Story/Task/Bug into smaller pieces; not independently planned at Epic level.
+- **Component**: Logical area/ownership within a project (e.g., "api", "frontend").
+- **Version/Release**: Targeted delivery bucket; issues tracked by Fix Version.
+- **Labels**: Free-form tags; use sparingly and consistently.
+
+```mermaid
+flowchart TB
+  P[Project] --> B1[Board (Scrum)]
+  P --> B2[Board (Kanban)]
+  B1 --> S((Sprint))
+  P --> V[Versions / Releases]
+  P --> C[Components]
+
+  E((Epic)) --> ST[Story]
+  E --> TK[Task]
+  E --> BG[Bug]
+  ST --> SUB1[Sub-task]
+  TK --> SUB2[Sub-task]
+  BG --> SUB3[Sub-task]
+
+  %% Notes: Boards are filter-based; items appear on one or more boards
+  B1 -. filter .- E
+  B1 -. filter .- ST
+  B2 -. filter .- TK
+```
+
+Tip: Map every custom status to the correct category (To Do / In Progress / Done) so reports reflect reality.
