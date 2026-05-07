@@ -357,6 +357,14 @@ const fileTree = {
             type: 'folder',
             children: [
                 { name: 'README.md', type: 'file', path: '06-specialized-topics/README.md' },
+                { name: 'agile', type: 'folder', children: [
+                    { name: 'agile-notes.md', type: 'file', path: '06-specialized-topics/agile/agile-notes.md' }
+                ]},
+                {
+                    name: 'python', type: 'folder', children: [
+                        { name: 'pandas-notes.md', type: 'file', path: '06-specialized-topics/python/pandas-notes.md' }
+                    ]
+                },
                 {
                     name: 'iot-embedded', type: 'folder', children: [
                         { name: 'DHT_Exporter.md', type: 'file', path: '06-specialized-topics/iot-embedded/DHT_Exporter.md' },
@@ -372,6 +380,9 @@ const fileTree = {
                     name: 'tools', type: 'folder', children: [
                         { name: 'custom-rule-builder', type: 'folder', children: [
                             { name: 'app.py', type: 'file', path: '06-specialized-topics/tools/custom-rule-builder/app.py' }
+                        ]},
+                        { name: 'jira', type: 'folder', children: [
+                            { name: 'jira-notes.md', type: 'file', path: '06-specialized-topics/tools/jira/jira-notes.md' }
                         ]}
                     ]
                 }
@@ -610,6 +621,22 @@ async function loadContent(path, type = 'file') {
 
         contentArea.innerHTML = marked.parse(markdown);
         
+        // Render Mermaid diagrams if present
+        if (window.mermaid) {
+            try {
+                // Ensure dark theme matches site
+                window.mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+                // Prefer run API if available (Mermaid v10+)
+                if (typeof window.mermaid.run === 'function') {
+                    window.mermaid.run({ querySelector: '.language-mermaid' });
+                } else if (typeof window.mermaid.init === 'function') {
+                    window.mermaid.init(undefined, contentArea.querySelectorAll('.language-mermaid'));
+                }
+            } catch (e) {
+                console.error('Mermaid render error', e);
+            }
+        }
+
         // Apply syntax highlighting
         if (window.Prism) {
             Prism.highlightAllUnder(contentArea);
