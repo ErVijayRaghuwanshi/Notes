@@ -163,3 +163,45 @@ def multi_source_bfs(starts, adj):
 - Word ladder (transformations with dictionary)
 - Minimum steps to reach all nodes from multiple sources
 - Level averages in a binary tree; Zigzag level order
+
+---
+
+## 🖼️ Visual: BFS Algorithm Flow
+
+```mermaid
+flowchart TD
+  A((Start)) --> B["Init: Q=[S], visited={S}, dist[S]=0"]
+  B --> C{Queue not empty?}
+  C -- Yes --> D["U = dequeue(Q)"]
+  D --> E{"For each V in adj[U]"}
+  E -- V not visited --> F["visited.add(V); dist[V]=dist[U]+1; enqueue V"]
+  F --> E
+  E -- All neighbors done --> C
+  C -- No --> G((End))
+```
+
+---
+
+## 🖼️ Visual: BFS Layers on a Sample Graph
+
+```mermaid
+flowchart LR
+  subgraph L0[Level 0]
+    S((S))
+  end
+  subgraph L1[Level 1]
+    A((A))
+    B((B))
+  end
+  subgraph L2[Level 2]
+    C((C))
+    D((D))
+    E((E))
+  end
+
+  S --> A
+  S --> B
+  A --> C
+  A --> D
+  B --> E
+```

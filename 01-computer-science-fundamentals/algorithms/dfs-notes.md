@@ -188,3 +188,43 @@ Use-cases: permutations, combinations, subsets, n-queens, word search, sudoku.
 - Count connected components in an undirected graph
 - All paths from source to target in a DAG
 - Word search on 2D grid using backtracking
+
+---
+
+## 🖼️ Visual: DFS Recursive Call Tree
+
+```mermaid
+flowchart TD
+  A[A] --> B[B]
+  B --> D[D]
+  B --> E[E]
+  A --> C[C]
+  C --> F[F]
+  C --> G[G]
+```
+
+This shows a pre-order style expansion: visit node, then recurse into each child.
+
+---
+
+## 🖼️ Visual: DFS Traversal Orders (Binary Tree)
+
+```mermaid
+flowchart LR
+  subgraph Tree
+    A((A)) --> B((B))
+    A --> C((C))
+    B --> D((D))
+    B --> E((E))
+    C --> F((F))
+    C --> G((G))
+  end
+
+  %% Orders
+  subgraph Orders
+  direction TB
+  PO[Preorder: A, B, D, E, C, F, G]
+  IO[Inorder: D, B, E, A, F, C, G]
+  PST[Postorder: D, E, B, F, C, G, A]
+  end
+```
