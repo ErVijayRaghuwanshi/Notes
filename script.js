@@ -10,6 +10,14 @@ const fileTree = {
             children: [
                 { name: 'README.md', type: 'file', path: '01-computer-science-fundamentals/README.md' },
                 {
+                    name: 'algorithms',
+                    type: 'folder',
+                    children: [
+                        { name: 'bfs-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/bfs-notes.md' },
+                        { name: 'dfs-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/dfs-notes.md' }
+                    ]
+                },
+                {
                     name: 'design-patterns',
                     type: 'folder',
                     children: [
