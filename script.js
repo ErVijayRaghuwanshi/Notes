@@ -433,6 +433,7 @@ const fileTree = {
         },
         { name: 'README.md', type: 'file', path: 'README.md' },
         { name: 'NOTES_TEMPLATE.md', type: 'file', path: 'NOTES_TEMPLATE.md' },
+        { name: 'NOTES_TEMPLATE_101.md', type: 'file', path: 'NOTES_TEMPLATE_101.md' },
         { name: 'RESTRUCTURING_SUMMARY.md', type: 'file', path: 'RESTRUCTURING_SUMMARY.md' }
     ]
 };
