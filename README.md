@@ -1,199 +1,146 @@
-# SDE2 Interview Preparation - Technical Knowledge Base
+# 📚 SDE2 Interview Preparation — Technical Knowledge Base
 
-A comprehensive, structured knowledge base for Software Development Engineer 2 (SDE2) interview preparation, covering backend development, big data engineering, system design, and computer science fundamentals.
+Welcome to the **Software Development Engineer 2 (SDE2) Technical Knowledge Base**. This is a highly structured, single-page reference library meticulously compiled for backend engineers, big data developers, full-stack engineers, and DevOps/SRE specialists. It acts as a unified index pointing to core computer science fundamentals, backend engineering, distributed systems, cloud infrastructure, and interview preparations.
 
-## 🎯 Quick Navigation by Role
-
-### 🔧 Backend Engineer
-1. [Backend Development](02-backend-development/) - FastAPI, databases, API gateways
-2. [System Design](04-system-design/) - Scalable architecture patterns and case studies
-3. [Computer Science Fundamentals](01-computer-science-fundamentals/) - SOLID, data structures, algorithms
-4. [Cloud & DevOps](05-cloud-and-devops/) - Kubernetes, Docker, CI/CD
-
-### 📊 Data Engineer
-1. [Big Data Engineering](03-big-data-engineering/) - Spark, Kafka, lakehouse, orchestration
-2. [Backend Development](02-backend-development/) - API integration, databases
-3. [System Design](04-system-design/) - Distributed systems and trade-offs
-4. [Computer Science Fundamentals](01-computer-science-fundamentals/) - Algorithms, design patterns
-
-### 🌐 Full-Stack Engineer
-1. [Backend Development](02-backend-development/) - FastAPI, RBAC, deployment
-2. [Computer Science Fundamentals](01-computer-science-fundamentals/) - Core CS concepts
-3. [System Design](04-system-design/) - End-to-end architecture and APIs
-4. [Cloud & DevOps](05-cloud-and-devops/) - Production deployment
-
-### DevOps Engineer
-1. [Cloud & DevOps](05-cloud-and-devops/) - Comprehensive interview prep hub
-2. [Linux](05-cloud-and-devops/01-linux/linux-notes.md) - File system, permissions, systemd, cron, SSH
-3. [Networking](05-cloud-and-devops/02-networking/networking-notes.md) - DNS, subnetting, load balancing, firewalls, VPN
-4. [Docker & Kubernetes](05-cloud-and-devops/04-docker/docker-notes.md) - Containers, orchestration, services, RBAC, Helm
-5. [CI/CD & GitOps](05-cloud-and-devops/06-ci-cd/ci-cd-notes.md) - Pipelines, deployment strategies, ArgoCD, FluxCD
-6. [Infrastructure as Code](05-cloud-and-devops/08-terraform/terraform-notes.md) - Terraform, Ansible, modules, state, automation
-7. [Cloud & Monitoring](05-cloud-and-devops/10-aws/aws-notes.md) - AWS, Azure, observability, alerting, tracing
-
-**Recommended Study Order**
-- **Phase 1: Foundations** - Linux, Networking, Git, Shell Scripting
-- **Phase 2: Containers** - Docker, Kubernetes
-- **Phase 3: CI/CD & GitOps** - CI/CD, Jenkins, GitOps
-- **Phase 4: IaC** - Terraform, Ansible
-- **Phase 5: Cloud & Monitoring** - AWS, Azure, AWS vs Azure, Monitoring
-- **Phase 6: Interview Prep** - Scenario, Behavioral, Technical Q&A
-
-**Each Section Contains**
-- **Core Concepts** - Key topics with explanations and diagrams
-- **Practical Examples** - Commands, configs, and code snippets
-- **Cheat Sheet** - Quick reference table
-- **Hands-on Labs** - Step-by-step exercises
-- **Real-world Scenarios** - Production scenarios with solutions
-- **Interview Q&A** - Basic, intermediate, and advanced questions
-
-## 📚 Repository Structure
-
-### [01-computer-science-fundamentals/](01-computer-science-fundamentals/)
-Core CS concepts essential for technical interviews
-- **Design Patterns**: SOLID principles with FastAPI examples
-- **Regex**: Comprehensive regex 101 guide and Python re module
-- **Data Structures**: Arrays, trees, graphs, hash tables (coming soon)
-- **Algorithms**: Sorting, searching, DP, greedy (coming soon)
-
-### [02-backend-development/](02-backend-development/)
-Production-ready backend patterns and frameworks
-- **FastAPI**: Middleware, RBAC, K8s deployment
-- **API Gateway**: Kong with JWT authentication
-- **Databases**: Design, normalization, optimization
-
-### [03-big-data-engineering/](03-big-data-engineering/)
-Comprehensive big data and data-platform interview hub
-- **Foundations**: Hadoop, HDFS, Spark core, Spark SQL, Structured Streaming
-- **Platform Components**: Kafka, Airflow, Hive metastore, Solr, Trino
-- **Lakehouse**: Delta tables, Spark 4.1 / SDP, Iceberg, Hudi comparisons
-- **Architecture**: Data-platform design, governance, lineage, batch vs streaming
-
-### [04-system-design/](04-system-design/)
-Comprehensive system design interview hub
-- **Foundations**: Scalability, networking, storage, databases, caching
-- **Distributed Systems**: Messaging, consistency, replication, load balancing
-- **Production Readiness**: Reliability, security, observability, estimation
-- **Case Studies**: URL shortener, news feed, chat, notifications, rate limiting, streaming
-
-### [05-cloud-and-devops/](05-cloud-and-devops/)
-Comprehensive cloud and DevOps interview hub
-- **Foundations**: Linux, Networking, Git, Shell Scripting
-- **Containers**: Docker, Kubernetes
-- **CI/CD & GitOps**: CI/CD, Jenkins, GitOps
-- **Infrastructure as Code**: Terraform, Ansible
-- **Cloud & Monitoring**: AWS, Azure, Monitoring
-
-### [06-specialized-topics/](06-specialized-topics/)
-Domain-specific knowledge
-- **IoT/Embedded**: ESP8266, DHT sensors
-- **Testing**: Playwright end-to-end testing framework
-- **Tools**: Custom SQL query builder
-
-### [07-research/](07-research/)
-Industry research and future trends
-- **AI & Software Development**: The Future of the Software Developer Role (2026–2031), Software 3.0 paradigm shift
-
-### [interview-prep/](interview-prep/)
-Interview-specific preparation materials
-- **Behavioral**: STAR method, common questions (coming soon)
-- **Coding Patterns**: Two pointers, sliding window (coming soon)
-- **Quick Reference**: Cheat sheets and templates (coming soon)
-
-## 🚀 Getting Started
-
-### For Interview Preparation (4-6 weeks)
-
-**Week 1-2: Fundamentals**
-- [ ] Review [SOLID principles](01-computer-science-fundamentals/design-patterns/SOLID.md)
-- [ ] Study [Database Design](02-backend-development/databases/Database_Design.md)
-- [ ] Practice data structures and algorithms
-
-**Week 3-4: Domain Expertise**
-- [ ] **Backend**: [FastAPI RBAC](02-backend-development/fastapi/FastAPI_RBAC.md), [Kong Gateway](02-backend-development/api-gateway/Kong_API_Gateway_101.md)
-- [ ] **Data Engineering**: Study the [Big Data hub](03-big-data-engineering/), then review [Spark Core](03-big-data-engineering/03-spark-core/spark-core-notes.md) and [Delta Lake](03-big-data-engineering/08-delta-lake-and-delta-tables/delta-lake-and-delta-tables-notes.md)
-- [ ] **System Design**: Study the [System Design hub](04-system-design/) and practice [case studies](04-system-design/15-case-studies/)
-
-**Week 5-6: Practice & Polish**
-- [ ] Mock interviews (technical + behavioral)
-- [ ] Review quick reference materials
-- [ ] Practice whiteboard coding
-- [ ] Prepare questions for interviewer
-
-### For Continuous Learning
-
-Clone and explore:
-```bash
-git clone https://github.com/ErVijayRaghuwanshi/Notes.git
-cd Notes
-```
-
-Each category has a detailed README with learning paths and interview tips.
-
-## 💡 Key Features
-
-- **Interview-Focused**: Content structured for SDE2 technical interviews
-- **Production Examples**: Real-world code with FastAPI, Spark, Kong
-- **Progressive Learning**: Clear paths from beginner to advanced
-- **Trade-off Discussions**: Pros/cons of different approaches
-- **Quick References**: Fast lookup for interview preparation
-
-## 📊 Content Status
-
-| Category | Status | Files |
-|----------|--------|-------|
-| Computer Science Fundamentals | 🟡 Partial | 3 (SOLID, Regex) |
-| Backend Development | 🟢 Complete | 5 (FastAPI, Kong, DB) |
-| Big Data Engineering | 🟢 Complete | 18 (hub, sections, FAQ) |
-| System Design | 🟢 Complete | 28 (hub, sections, case studies, FAQ) |
-| Cloud & DevOps | � Complete | 16 (Linux, K8s, Docker, CI/CD, IaC, Cloud) |
-| Specialized Topics | 🟢 Complete | 4 (IoT, Playwright, tools) |
-| Research | 🟢 Active | 1 (AI & Software Future) |
-| Interview Prep | 🔴 Coming Soon | 0 |
-
-## 🎓 Interview Tips
-
-### Technical Interviews
-1. **Clarify requirements** before coding
-2. **Think aloud** - explain your approach
-3. **Start simple** then optimize
-4. **Test your code** with edge cases
-5. **Discuss trade-offs** and complexity
-
-### System Design
-1. **Ask clarifying questions** (scale, latency, consistency)
-2. **Start with high-level** architecture
-3. **Dive into components** one by one
-4. **Discuss bottlenecks** and optimizations
-5. **Consider failure scenarios**
-
-### Behavioral
-1. Use **STAR method** (Situation, Task, Action, Result)
-2. Prepare **3-4 stories** covering different scenarios
-3. Show **impact** of your work
-4. Demonstrate **learning** from failures
-5. Ask **thoughtful questions**
-
-## 🔗 External Resources
-
-- **LeetCode**: Practice coding problems
-- **System Design Primer**: GitHub repository
-- **Designing Data-Intensive Applications**: Book by Martin Kleppmann
-- **FastAPI Documentation**: Official docs
-- **Apache Spark Documentation**: Official docs
-
-## 🤝 Contributing
-
-This is a personal knowledge base, but suggestions are welcome:
-- Open an issue for content requests
-- Submit PRs for corrections or enhancements
-- Share your interview experiences
-- **Follow the [Notes Template](NOTES_TEMPLATE.md)** for consistent formatting
-
-## 📄 License
-
-Licensed under [LICENSE](LICENSE) - see file for details.
+> [!NOTE]
+> **Unified Section Directory**
+> This root document serves strictly as a high-level reference index. Use the navigation links below or search via the command palette to jump directly to specific sub-section hubs. Each sub-folder contains its own detailed README and comprehensive technical guides.
 
 ---
 
-**Last Updated**: April 2026 | **Status**: Active Development | **Focus**: SDE2 Interview Preparation
+## 🗺️ SDE2 Mastery Roadmap
+
+Below is the visual learning and architectural roadmap across all tracks. This flowchart maps how core foundational layers integrate into advanced platforms, domain expertise, and final interview preparations:
+
+```mermaid
+flowchart TD
+    %% Node Definitions
+    A[Phase 1: CS & System Foundations] --> B[Phase 2: Core Backend Engineering]
+    A --> C[Phase 3: Platforms & Infrastructure]
+    
+    B --> D[Phase 4: Distributed System Design]
+    C --> D
+    
+    D --> E[Phase 5: Domain & Lakehouse Mastery]
+    E --> F[Phase 6: Interview Preparation]
+
+    subgraph A [Phase 1: CS & System Foundations]
+        a1["Linux & Networking Principles"]
+        a2["SOLID & Structural Design Patterns"]
+    end
+
+    subgraph B [Phase 2: Core Backend Engineering]
+        b1["API Architectures & FastAPI Patterns"]
+        b2["Database Design & Normalization"]
+    end
+
+    subgraph C [Phase 3: Platforms & Infrastructure]
+        c1["Docker & Kubernetes Orchestration"]
+        c2["Big Data Ecosystems (Spark & HDFS)"]
+    end
+
+    subgraph D [Phase 4: Distributed System Design]
+        d1["Distributed Caching & Messaging"]
+        d2["API Gateways (Kong) & RBAC"]
+        d3["Infrastructure as Code (Terraform)"]
+    end
+
+    subgraph E [Phase 5: Domain & Lakehouse Mastery]
+        e1["Lakehouses (Delta Lake / Iceberg)"]
+        e2["High-Scale System Case Studies"]
+        e3["Future Industry Trends (Software 3.0)"]
+    end
+
+    subgraph F [Phase 6: Interview Preparation]
+        f1["STAR Behavioral Drills & Guides"]
+        f2["Technical Case Mocks & Coding Patterns"]
+    end
+
+    %% Styles
+    style A fill:#1e1b4b,stroke:#4f46e5,stroke-width:2px,color:#f8fafc
+    style B fill:#06202c,stroke:#0891b2,stroke-width:2px,color:#f9fafb
+    style C fill:#022c22,stroke:#059669,stroke-width:2px,color:#f0fdf4
+    style D fill:#3f1d0b,stroke:#d97706,stroke-width:2px,color:#fffbeb
+    style E fill:#1e1e38,stroke:#6366f1,stroke-width:2px,color:#f8fafc
+    style F fill:#31102f,stroke:#db2777,stroke-width:2px,color:#fdf2f8
+```
+
+---
+
+## 📚 Detailed Category Hubs
+
+### [01-Computer Science Fundamentals](01-computer-science-fundamentals/)
+Essential computer science patterns and guidelines for writing high-quality code.
+* **Design Patterns**: Clean architectures and SOLID principles illustrated with FastAPI examples.
+* **Regex Engine**: Detailed regular expressions 101 guide and Python `re` module patterns.
+* **Data Structures**: Lists, trees, graphs, and hash tables *(coming soon)*.
+* **Algorithms**: Time/space analysis, searching, sorting, and dynamic programming *(coming soon)*.
+
+### [02-Backend Development](02-backend-development/)
+Production-grade patterns, framework structures, and API gateways.
+* **FastAPI Applications**: Injections, custom middlewares, database scopes, and K8s configuration.
+* **API Gateway Hub**: Kong Gateway integration using JWT tokens, rate limiting, and RBAC configs.
+* **Databases**: Relational design, index indexing, normalizations, and transaction locks.
+
+### [03-Big Data Engineering](03-big-data-engineering/)
+High-performance distributed computing platforms and storage hubs.
+* **Foundations**: Hadoop, HDFS distributed layouts, Spark core optimization, Spark SQL plans, and Structured Streaming.
+* **Platform Engines**: Kafka event-streaming broker configs, Apache Airflow workflows, Hive Metastore, and Trino query engine.
+* **Modern Lakehouse**: Delta Lake/tables, Apache Iceberg format details, and Apache Hudi comparisons.
+* **Data Architecture**: High-scale data platform design, governance metadata, and batch vs stream pipelines.
+
+### [04-System Design](04-system-design/)
+Scalability patterns, architectural building blocks, and detailed case studies.
+* **Foundational Blocks**: Scaling concepts, transport-layer protocols, storage models, databases, and multi-tier caching.
+* **Distributed Engines**: Message brokers, consensus engines, high availability, and replication.
+* **Production Observability**: Tracing, security best practices, and load estimations.
+* **Real-world Case Studies**: URL shorteners, news feeds, chat hubs, notification engines, and streaming platforms.
+
+### [05-Cloud & DevOps](05-cloud-and-devops/)
+Infrastructure engineering, automation, and continuous delivery systems.
+* **Foundations**: Scripting foundations, Linux file parameters, and networking.
+* **Containerization**: Docker engines, Kubernetes clusters, routing, and namespaces.
+* **CI/CD Pipelines**: Automated delivery gates, Jenkins orchestrations, and GitOps deployments.
+* **Infrastructure**: Terraform scripting, declarative playbooks, and multi-cloud AWS/Azure monitoring.
+
+### [06-Specialized Topics](06-specialized-topics/)
+Specialized engineering topics for target domains.
+* **IoT & Embedded Systems**: ESP8266 architectures, sensor read routines, and Wi-Fi networks.
+* **Testing Engines**: Playwright end-to-end framework, asynchronous assertions, and page configurations.
+* **SQL Query Builder**: Custom tool designed to assemble and construct clean SQL queries dynamically.
+
+### [07-Research](07-research/)
+Cutting-edge industry developments and future architectural paradigms.
+* **AI & Software Development**: Insights into the future of software development (2026–2031) and the Software 3.0 paradigm shift.
+
+### [Interview Preparation](interview-prep/)
+Comprehensive interview preparation resources for SDE2 positions.
+* **Behavioral**: STAR method frameworks, common behavioral questions, leadership principles, and team collaboration scenarios.
+* **Coding Patterns**: Two pointers, sliding windows, tree BFS/DFS, graph traversals, and dynamic programming patterns.
+* **Quick Reference**: Time/space complexity cheat sheets, syntax helpers, system design templates, and common mistakes to avoid.
+
+---
+
+## 📊 Technical Content Status
+
+| Focus Area | Directory Reference | Completeness | Covered Core Topics |
+| :--- | :--- | :---: | :--- |
+| **CS Fundamentals** | [01-computer-science-fundamentals/](01-computer-science-fundamentals/) | 🟡 Partial | SOLID principles, Regex parsing, structural patterns |
+| **Backend Development** | [02-backend-development/](02-backend-development/) | 🟢 Complete | FastAPI framework, Kong API Gateway, SQL Database architectures |
+| **Big Data Engineering** | [03-big-data-engineering/](03-big-data-engineering/) | 🟢 Complete | Apache Spark, Kafka integrations, Delta Lake lakehouses, Airflow |
+| **System Design** | [04-system-design/](04-system-design/) | 🟢 Complete | Multi-tier scaling, distributed consistency, 10+ detailed case studies |
+| **Cloud & DevOps** | [05-cloud-and-devops/](05-cloud-and-devops/) | 🟢 Complete | Linux, Networking, Docker, K8s clusters, IaC (Terraform), Monitoring |
+| **Specialized Topics** | [06-specialized-topics/](06-specialized-topics/) | 🟢 Complete | ESP8266 IoT configurations, Playwright testing, SQL Query Builders |
+| **Industry Research** | [07-research/](07-research/) | 🟢 Active | Software 3.0, future of engineer roles, AI-assisted coding |
+| **Interview Preparation** | [interview-prep/](interview-prep/) | 🟢 Complete | STAR behavioral questions, coding patterns, preparation timelines |
+
+---
+
+## 🤝 Contributing & Standards
+
+This knowledge base is continuously updated to keep pace with modern engineering standards. All additions and modifications must align with the formatting guidelines.
+* **Note Consistency**: When contributing or adding new files, please follow the [Notes Template](NOTES_TEMPLATE.md) guidelines.
+* **Folder Structure**: Place notes inside their respective subdirectories under the correct category folder structure.
+
+---
+**Last Modernized**: May 2026 | **Status**: Active Production Hub | **Target**: Premium SDE2 Interview Preparation Reference
