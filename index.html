@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SDE2 Interview Prep Notes - Technical Knowledge Base covering Backend Development, Big Data, Distributed Systems, Cloud & DevOps, and System Design.">
+    <meta name="keywords" content="SDE2, Interview Prep, System Design, Big Data, FastAPI, Kubernetes, Docker, Software Engineering, Architecture">
     <title>SDE2 Interview Prep - Technical Knowledge Base</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -20,14 +22,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen">
+    <a href="#contentArea" class="skip-link">Skip to main content</a>
     <!-- Reading Progress Bar -->
     <div id="progressBar" class="progress-bar"></div>
 
     <!-- Mobile Menu Button moved to header -->
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full bg-gray-800 border-r border-gray-700 overflow-hidden flex flex-col">
+    <aside id="sidebar" class="sidebar fixed top-0 left-0 h-full bg-gray-800 border-r border-gray-700 overflow-hidden flex flex-col" role="navigation" aria-label="Notes navigation">
         <!-- Header -->
-        <div class="sidebar-header p-4 border-b border-gray-700 flex flex-col">
+        <div class="sidebar-header p-4 border-b border-gray-700 flex flex-col relative">
             <h1 class="text-xl font-bold text-blue-400 flex items-center gap-2">
                 <span>📚</span> SDE2 Notes
             </h1>
@@ -35,8 +38,8 @@
         </div>
         
         <!-- Search Button -->
-        <div class="p-3 border-b border-gray-700/50">
-            <button id="searchTriggerBtn" class="w-full flex items-center justify-between bg-gray-900/50 hover:bg-gray-700/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm text-gray-400 transition-colors">
+        <div class="p-3 border-b border-gray-700/30">
+            <button id="searchTriggerBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="commandPaletteOverlay" class="w-full flex items-center justify-between bg-gray-900/50 hover:bg-gray-700/50 border border-gray-700/50 rounded-lg px-3 py-2 text-sm text-gray-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
                 <div class="flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -45,6 +48,17 @@
                 </div>
                 <kbd class="hidden md:inline-block px-2 py-0.5 text-xs font-mono bg-gray-800 border border-gray-700 rounded text-gray-500">Ctrl+K</kbd>
             </button>
+        </div>
+        
+        <!-- Sidebar Search Filter -->
+        <div class="sidebar-search-container border-b border-gray-700/30">
+            <input 
+                type="text" 
+                id="treeSearchInput" 
+                placeholder="Filter folder tree..." 
+                class="sidebar-search-input"
+                aria-label="Filter folders and files"
+            >
         </div>
         
         <!-- File Tree -->
@@ -64,35 +78,94 @@
         </div>
     </aside>
 
-    <!-- Left Panel Toggle - sits between sidebar and main -->
-    <button id="sidebarToggle" class="panel-toggle left-panel-toggle hidden md:flex" title="Toggle Sidebar">
-        <svg class="w-4 h-4 toggle-chevron" fill="none" viewBox="-8 -8 32 32" role="presentation">
-            <path fill="currentColor" d="m6.03 1.47 6 6a.75.75 0 0 1 .052 1.004l-.052.056-6 6-1.06-1.06L10.44 8 4.97 2.53z"></path>
-        </svg>
-    </button>
-
     <!-- Main Content -->
-    <main class="main-content min-h-screen">
+    <main class="main-content min-h-screen" role="main">
         <!-- Top Bar -->
         <header class="sticky top-0 bg-gray-900/95 backdrop-blur border-b border-gray-700 px-4 md:px-6 py-3 z-10 flex items-center gap-4">
             <!-- Mobile Menu Button -->
-            <button id="menuBtn" class="md:hidden flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-200 hover:bg-gray-800 rounded-lg transition-colors shrink-0">
+            <button id="menuBtn" aria-label="Open navigation menu" aria-controls="sidebar" class="md:hidden flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-200 hover:bg-gray-800 rounded-lg transition-colors shrink-0">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
-            <div id="breadcrumb" class="flex items-center text-sm text-gray-400 overflow-x-auto whitespace-nowrap hide-scrollbar">
+            <!-- Desktop Sidebar Toggle Button -->
+            <button id="sidebarToggle" class="hidden md:flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-200 hover:bg-gray-800 rounded-lg transition-colors shrink-0" title="Toggle Sidebar" aria-label="Toggle sidebar navigation">
+                <svg class="w-5 h-5 toggle-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div id="breadcrumb" class="flex items-center text-sm text-gray-400 overflow-x-auto whitespace-nowrap hide-scrollbar" aria-label="Breadcrumb">
                 <span class="breadcrumb-item">Home</span>
             </div>
         </header>
         
         <!-- Content Area -->
         <div class="px-6 py-8 max-w-7xl mx-auto flex gap-8">
-            <div id="contentArea" class="markdown-body flex-1 min-w-0 transition-opacity duration-300">
-                <!-- Welcome content will be loaded here -->
-                <div class="text-center py-12">
-                    <div class="loading-spinner mx-auto"></div>
-                    <p class="text-gray-400 mt-4">Loading content...</p>
+            <div class="flex-1 min-w-0 flex flex-col">
+                <!-- Reader Toolbar -->
+                <div class="note-metadata-bar">
+                    <div class="note-stats">
+                        <span id="readingTime">⏱️ 0 min read</span>
+                        <span class="text-gray-700/50">|</span>
+                        <span id="wordCount">📝 0 words</span>
+                    </div>
+                    <div class="note-actions">
+                        <!-- Font decrease -->
+                        <button id="fontDecreaseBtn" class="note-action-btn font-mono" title="Decrease Font Size" aria-label="Decrease font size">A-</button>
+                        <!-- Font increase -->
+                        <button id="fontIncreaseBtn" class="note-action-btn font-mono" title="Increase Font Size" aria-label="Increase font size">A+</button>
+                        
+                        <span class="text-gray-700/50 mx-1">|</span>
+                        
+                        <!-- Theme Switcher -->
+                        <div class="theme-picker-container">
+                            <button id="themePickerBtn" class="note-action-btn" title="Select Theme" aria-haspopup="true" aria-expanded="false" aria-label="Select theme">
+                                🎨
+                            </button>
+                            <div id="themeDropdown" class="theme-dropdown">
+                                <button class="theme-option-btn active" data-theme="slate">
+                                    <span class="flex items-center gap-2">
+                                        <span class="theme-dot bg-indigo-500"></span> Slate Cosmic
+                                    </span>
+                                </button>
+                                <button class="theme-option-btn" data-theme="cyberpunk">
+                                    <span class="flex items-center gap-2">
+                                        <span class="theme-dot bg-cyan-400"></span> Cyberpunk
+                                    </span>
+                                </button>
+                                <button class="theme-option-btn" data-theme="forest">
+                                    <span class="flex items-center gap-2">
+                                        <span class="theme-dot bg-emerald-500"></span> Forest
+                                    </span>
+                                </button>
+                                <button class="theme-option-btn" data-theme="amber">
+                                    <span class="flex items-center gap-2">
+                                        <span class="theme-dot bg-amber-500"></span> Amber Glow
+                                    </span>
+                                </button>
+                                <button class="theme-option-btn" data-theme="solarized">
+                                    <span class="flex items-center gap-2">
+                                        <span class="theme-dot bg-blue-500"></span> Solarized Light
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Share Link -->
+                        <button id="shareLinkBtn" class="note-action-btn" title="Copy Share Link" aria-label="Copy share link to clipboard">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742s-1.83 1.83-1.83 3.65c0 1.82 1.83 3.65 1.83 3.65s1.83-1.83 1.83-3.65c0-1.82-1.83-3.65-1.83-3.65zM15.316 13.258s1.83-1.83 1.83-3.65c0-1.82-1.83-3.65-1.83-3.65s-1.83 1.83-1.83 3.65c0 1.82 1.83 3.65 1.83 3.65zM10.25 13.75l3.5-3.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="contentArea" class="markdown-body flex-1 min-w-0 transition-opacity duration-300" tabindex="-1" aria-live="polite">
+                    <!-- Welcome content will be loaded here -->
+                    <div class="text-center py-12">
+                        <div class="loading-spinner mx-auto"></div>
+                        <p class="text-gray-400 mt-4">Loading content...</p>
+                    </div>
                 </div>
             </div>
             
@@ -114,22 +187,24 @@
     </main>
 
     <!-- Command Palette Modal -->
-    <div id="commandPaletteOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-start justify-center pt-[10vh] transition-opacity opacity-0 px-4">
+    <div id="commandPaletteOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-start justify-center pt-[10vh] transition-opacity opacity-0 px-4" role="dialog" aria-modal="true" aria-labelledby="cmdPaletteLabel" aria-hidden="true">
         <div id="commandPalette" class="bg-[#1e293b] border border-[#334155] shadow-2xl rounded-xl w-full max-w-2xl overflow-hidden transform scale-95 transition-all duration-200">
             <div class="flex items-center px-4 py-3 border-b border-[#334155]">
+                <span id="cmdPaletteLabel" class="sr-only">Search notes</span>
                 <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
                 <input 
                     type="text" 
                     id="cmdInput" 
+                    aria-label="Search notes"
                     placeholder="Search notes..."
                     class="flex-1 bg-transparent border-none text-gray-100 placeholder-gray-500 focus:outline-none text-lg"
                     autocomplete="off"
                 >
                 <kbd class="hidden md:inline-block px-2 py-1 text-xs font-mono bg-[#334155] rounded text-gray-400 border border-[#475569]">ESC</kbd>
             </div>
-            <div id="cmdResults" class="max-h-[60vh] overflow-y-auto p-2 custom-scrollbar">
+            <div id="cmdResults" class="max-h-[60vh] overflow-y-auto p-2 custom-scrollbar" role="listbox">
                 <!-- Search Results will be injected here -->
                 <div class="p-8 text-center text-sm text-gray-500">
                     Type to start searching...
@@ -146,11 +221,17 @@
     <div id="overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden transition-opacity"></div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollToTop" class="scroll-to-top" title="Scroll to top">
+    <button id="scrollToTop" class="scroll-to-top" title="Scroll to top" aria-label="Scroll back to top">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
         </svg>
     </button>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxOverlay" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Image preview zoom">
+        <img id="lightboxImage" class="lightbox-content" src="" alt="">
+        <div id="lightboxCaption" class="lightbox-caption">Image Zoom</div>
+    </div>
 
     <!-- script from external file -->
     <script src="script.js"></script>

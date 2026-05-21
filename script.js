@@ -442,6 +442,10 @@ const fileTree = {
 let currentPath = 'README.md';
 let allFiles = [];
 let fileContents = {};
+let searchIndex = []; // For background full-text indexing
+let observer = null;  // For scrollspy intersection observer
+let rootFontSize = 1.05; // Base font size in rem
+
 
 // DOM Elements
 const fileTreeEl = document.getElementById('fileTree');
@@ -547,6 +551,8 @@ function renderTree(node, depth = 0) {
         const icon = node.type === 'html' ? '🌐' : '📄';
         return `
                 <div class="tree-item py-1.5 px-2 rounded flex items-center gap-2" 
+                     role="button"
+                     tabindex="0"
                      data-path="${node.path}" 
                      data-type="${node.type}"
                      style="padding-left: ${depth * 16 + 8}px">
@@ -563,6 +569,9 @@ function renderTree(node, depth = 0) {
         return `
                 <div class="tree-folder ${isRoot ? 'open' : ''}">
                     <div class="tree-header tree-item py-1.5 px-2 rounded flex items-center gap-2" 
+                         role="button"
+                         tabindex="0"
+                         aria-expanded="${isRoot ? 'true' : 'false'}"
                          style="padding-left: ${depth * 16 + 8}px">
                         <span class="tree-toggle flex items-center justify-center w-4 h-4 flex-shrink-0 text-gray-500 hover:text-gray-300 transition-colors">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
@@ -610,6 +619,8 @@ async function loadContent(path, type = 'file') {
                         <iframe src="${path}" class="w-full flex-1 border-0 rounded-lg" style="min-height: 70vh"></iframe>
                     </div>
                 `;
+            document.getElementById('readingTime').innerHTML = `⏱️ Interactive`;
+            document.getElementById('wordCount').innerHTML = `📝 Web Visual`;
             updateBreadcrumb(path);
             updateHash(path);
             contentArea.style.opacity = '1';
@@ -622,7 +633,13 @@ async function loadContent(path, type = 'file') {
         const markdown = await response.text();
         fileContents[path] = markdown;
 
-        // Configure marked (latest versions don't support highlight in setOptions)
+        // Calculate and update reading metrics
+        const words = markdown.split(/\s+/).filter(Boolean).length;
+        const minutes = Math.max(1, Math.ceil(words / 200));
+        document.getElementById('readingTime').innerHTML = `⏱️ ${minutes} min read`;
+        document.getElementById('wordCount').innerHTML = `📝 ${words} words`;
+
+        // Configure marked
         marked.setOptions({
             breaks: true,
             gfm: true
@@ -630,12 +647,13 @@ async function loadContent(path, type = 'file') {
 
         contentArea.innerHTML = marked.parse(markdown);
         
+        // Parse custom blockquote callouts into styled alert boxes
+        renderAlerts(contentArea);
+        
         // Render Mermaid diagrams if present
         if (window.mermaid) {
             try {
-                // Ensure dark theme matches site
                 window.mermaid.initialize({ startOnLoad: false, theme: 'dark' });
-                // Prefer run API if available (Mermaid v10+)
                 if (typeof window.mermaid.run === 'function') {
                     window.mermaid.run({ querySelector: '.language-mermaid' });
                 } else if (typeof window.mermaid.init === 'function') {
@@ -651,11 +669,17 @@ async function loadContent(path, type = 'file') {
             Prism.highlightAllUnder(contentArea);
         }
 
-        // Add copy buttons to code blocks
+        // Add copy buttons and header bars to code blocks
         addCopyButtons();
+
+        // Register images with Lightboxzoom listener
+        setupLightbox();
 
         // Generate table of contents
         generateTableOfContents();
+
+        // Setup Scrollspy observer for ToC
+        setupScrollspy();
 
         // Fix relative links in markdown
         contentArea.querySelectorAll('a').forEach(link => {
@@ -665,9 +689,7 @@ async function loadContent(path, type = 'file') {
                     e.preventDefault();
                     const basePath = path.substring(0, path.lastIndexOf('/') + 1);
                     let newPath = basePath + href;
-                    // Normalize path
                     newPath = newPath.replace(/\/\.\//g, '/').replace(/[^/]+\/\.\.\//g, '');
-                    // If path ends with /, it's a folder - append README.md
                     if (newPath.endsWith('/')) {
                         newPath += 'README.md';
                     }
@@ -680,7 +702,6 @@ async function loadContent(path, type = 'file') {
 
         updateBreadcrumb(path);
         currentPath = path;
-
         updateHash(path);
 
         // Scroll to top
@@ -692,6 +713,8 @@ async function loadContent(path, type = 'file') {
         });
 
     } catch (error) {
+        document.getElementById('readingTime').innerHTML = `⏱️ 0 min read`;
+        document.getElementById('wordCount').innerHTML = `📝 0 words`;
         contentArea.innerHTML = `
                 <div class="text-center py-12">
                     <div class="text-6xl mb-4">😕</div>
@@ -752,6 +775,8 @@ function highlightActiveFile(path) {
 // Command Palette Logic
 function openCommandPalette() {
     cmdOverlay.classList.remove('hidden');
+    cmdOverlay.setAttribute('aria-hidden', 'false');
+    searchTriggerBtn.setAttribute('aria-expanded', 'true');
     requestAnimationFrame(() => {
         cmdOverlay.classList.remove('opacity-0');
         cmdPalette.classList.remove('scale-95', 'opacity-0');
@@ -763,6 +788,8 @@ function openCommandPalette() {
 function closeCommandPalette() {
     cmdOverlay.classList.add('opacity-0');
     cmdPalette.classList.add('scale-95', 'opacity-0');
+    searchTriggerBtn.setAttribute('aria-expanded', 'false');
+    cmdOverlay.setAttribute('aria-hidden', 'true');
     setTimeout(() => {
         cmdOverlay.classList.add('hidden');
         cmdInput.value = '';
@@ -772,13 +799,40 @@ function closeCommandPalette() {
 function performCmdSearch(query) {
     cmdSelectedIndex = -1;
     if (!query.trim()) {
-        currentCmdResults = allFiles.slice(0, 10);
+        currentCmdResults = allFiles.slice(0, 10).map(file => ({
+            ...file,
+            snippet: ''
+        }));
     } else {
         const lowerQuery = query.toLowerCase();
-        currentCmdResults = allFiles.filter(file =>
-            file.name.toLowerCase().includes(lowerQuery) ||
-            file.path.toLowerCase().includes(lowerQuery)
-        ).slice(0, 15);
+        const results = [];
+        
+        for (const file of allFiles) {
+            const matchesName = file.name.toLowerCase().includes(lowerQuery);
+            const matchesPath = file.path.toLowerCase().includes(lowerQuery);
+            
+            const indexedFile = searchIndex.find(idxFile => idxFile.path === file.path);
+            const matchesContent = indexedFile ? indexedFile.lowerContent.includes(lowerQuery) : false;
+            
+            if (matchesName || matchesPath || matchesContent) {
+                let snippet = '';
+                if (indexedFile && matchesContent) {
+                    snippet = getContextSnippet(indexedFile.content, query);
+                } else if (indexedFile) {
+                    snippet = indexedFile.content.substring(0, 80) + (indexedFile.content.length > 80 ? '...' : '');
+                }
+                
+                results.push({
+                    ...file,
+                    snippet: snippet,
+                    score: matchesName ? 10 : (matchesPath ? 5 : 1)
+                });
+            }
+        }
+        
+        currentCmdResults = results
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 15);
     }
     renderCmdResults(query);
 }
@@ -795,16 +849,32 @@ function renderCmdResults(query) {
 
     cmdResults.innerHTML = currentCmdResults.map((file, index) => {
         const icon = file.type === 'html' ? '🌐' : '📄';
-        return `
-            <div class="cmd-result flex items-center p-3 mb-1 rounded-lg" data-index="${index}">
-                <span class="text-xl mr-3 opacity-70">${icon}</span>
-                <div class="flex-1 min-w-0">
-                    <div class="cmd-result-title font-medium text-sm text-gray-200 truncate">
-                        ${query ? highlightMatch(file.name, query) : file.name}
-                    </div>
-                    <div class="text-xs text-gray-500 truncate">${file.path}</div>
+        const highlightedName = query ? highlightMatch(file.name, query) : file.name;
+        const highlightedPath = query ? highlightMatch(file.path, query) : file.path;
+        
+        let snippetHtml = '';
+        if (file.snippet) {
+            const highlightedSnippet = query ? highlightMatch(file.snippet, query) : file.snippet;
+            snippetHtml = `
+                <div class="cmd-result-snippet text-xs text-gray-400 mt-1 pl-4 border-l-2 border-primary/20 italic">
+                    ${highlightedSnippet}
                 </div>
-                <span class="hidden md:block text-xs text-gray-600 font-mono ml-3">↵</span>
+            `;
+        }
+        
+        return `
+            <div class="cmd-result flex flex-col p-3 mb-1 rounded-lg transition-all" data-index="${index}">
+                <div class="flex items-center">
+                    <span class="text-xl mr-3 opacity-70 flex-shrink-0">${icon}</span>
+                    <div class="flex-1 min-w-0">
+                        <div class="cmd-result-title font-medium text-sm text-gray-200 truncate">
+                            ${highlightedName}
+                        </div>
+                        <div class="text-xs text-gray-500 truncate">${highlightedPath}</div>
+                    </div>
+                    <span class="hidden md:block text-xs text-gray-600 font-mono ml-3 shrink-0">↵</span>
+                </div>
+                ${snippetHtml}
             </div>
         `;
     }).join('');
@@ -818,11 +888,11 @@ function renderCmdResults(query) {
 function updateCmdSelection() {
     const items = cmdResults.querySelectorAll('.cmd-result');
     items.forEach((item, index) => {
-        if (index === cmdSelectedIndex) {
-            item.classList.add('active');
+        const isSelected = index === cmdSelectedIndex;
+        item.classList.toggle('active', isSelected);
+        item.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        if (isSelected) {
             item.scrollIntoView({ block: 'nearest' });
-        } else {
-            item.classList.remove('active');
         }
     });
 }
@@ -834,9 +904,41 @@ function highlightMatch(text, query) {
     return text.replace(regex, '<span class="search-highlight">$1</span>');
 }
 
+// Robust copy to clipboard utility (works in secure and insecure contexts)
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+    } else {
+        // Fallback for non-HTTPS or local file:// protocols
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textArea);
+            if (successful) {
+                return Promise.resolve();
+            } else {
+                return Promise.reject(new Error('Fallback copy failed'));
+            }
+        } catch (err) {
+            document.body.removeChild(textArea);
+            return Promise.reject(err);
+        }
+    }
+}
+
 // Add copy buttons to code blocks
 function addCopyButtons() {
     contentArea.querySelectorAll('pre').forEach(pre => {
+        if (pre.parentNode && pre.parentNode.classList.contains('code-block-wrapper')) return;
+        
         const wrapper = document.createElement('div');
         wrapper.className = 'code-block-wrapper';
         pre.parentNode.insertBefore(wrapper, pre);
@@ -845,20 +947,59 @@ function addCopyButtons() {
         const codeEl = pre.querySelector('code');
         if (!codeEl) return;
 
+        let lang = 'CODE';
+        const classes = Array.from(codeEl.classList);
+        const langClass = classes.find(c => c.startsWith('language-'));
+        if (langClass) {
+            lang = langClass.replace('language-', '').toUpperCase();
+        }
+
+        const headerBar = document.createElement('div');
+        headerBar.className = 'code-block-header';
+        
+        const macControls = document.createElement('div');
+        macControls.className = 'mac-controls';
+        macControls.innerHTML = `
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+        `;
+        
+        const langLabel = document.createElement('span');
+        langLabel.className = 'code-lang';
+        langLabel.textContent = lang;
+
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-button';
-        copyBtn.textContent = 'Copy';
+        copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
+        copyBtn.innerHTML = `
+            <svg class="copy-icon" viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/></svg>
+            <span class="copy-text">Copy</span>
+        `;
+        
         copyBtn.onclick = async () => {
             const code = codeEl.textContent;
-            await navigator.clipboard.writeText(code);
-            copyBtn.textContent = 'Copied!';
-            copyBtn.classList.add('copied');
-            setTimeout(() => {
-                copyBtn.textContent = 'Copy';
-                copyBtn.classList.remove('copied');
-            }, 2000);
+            try {
+                await copyToClipboard(code);
+                
+                copyBtn.classList.add('copied');
+                const copyText = copyBtn.querySelector('.copy-text');
+                if (copyText) copyText.textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    if (copyText) copyText.textContent = 'Copy';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy code block:', err);
+            }
         };
-        wrapper.appendChild(copyBtn);
+
+        headerBar.appendChild(macControls);
+        headerBar.appendChild(langLabel);
+        headerBar.appendChild(copyBtn);
+        
+        wrapper.insertBefore(headerBar, pre);
     });
 }
 
@@ -943,6 +1084,387 @@ function toggleToc() {
     localStorage.setItem('tocCollapsed', tocSidebar.classList.contains('collapsed'));
 }
 
+// Render GitHub Alert blocks from blockquotes
+function renderAlerts(container) {
+    const blockquotes = container.querySelectorAll('blockquote');
+    blockquotes.forEach(bq => {
+        const text = bq.textContent.trim();
+        const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i);
+        if (match) {
+            const type = match[1].toUpperCase();
+            const typeClass = `alert-${type.toLowerCase()}`;
+            
+            let iconSvg = '';
+            if (type === 'NOTE') {
+                iconSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+            } else if (type === 'TIP') {
+                iconSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>`;
+            } else if (type === 'IMPORTANT') {
+                iconSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+            } else if (type === 'WARNING') {
+                iconSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+            } else if (type === 'CAUTION') {
+                iconSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>`;
+            }
+            
+            let html = bq.innerHTML;
+            html = html.replace(/\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](\s*<br\s*\/?>)?/gi, '');
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert-block ${typeClass}`;
+            alertDiv.innerHTML = `
+                <div class="alert-header">
+                    <span class="alert-icon">${iconSvg}</span>
+                    <span>${type}</span>
+                </div>
+                <div class="alert-content">
+                    ${html}
+                </div>
+            `;
+            
+            bq.parentNode.replaceChild(alertDiv, bq);
+        }
+    });
+}
+
+// Setup Scrollspy for Table of Contents
+function setupScrollspy() {
+    if (!tocContainer) return;
+    
+    if (observer) {
+        observer.disconnect();
+    }
+    
+    const headings = contentArea.querySelectorAll('h1, h2, h3, h4');
+    if (headings.length === 0) return;
+    
+    const tocItems = tocContainer.querySelectorAll('.toc-item');
+    if (tocItems.length === 0) return;
+
+    const visibleHeadings = new Map();
+    
+    observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            visibleHeadings.set(entry.target.id, entry.isIntersecting);
+        });
+        
+        let activeHeadingId = null;
+        for (const heading of headings) {
+            if (visibleHeadings.get(heading.id)) {
+                activeHeadingId = heading.id;
+                break;
+            }
+        }
+        
+        if (!activeHeadingId) {
+            let minDistance = Infinity;
+            headings.forEach(heading => {
+                const rect = heading.getBoundingClientRect();
+                const dist = Math.abs(rect.top);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    activeHeadingId = heading.id;
+                }
+            });
+        }
+        
+        if (activeHeadingId) {
+            headings.forEach((heading, idx) => {
+                const item = tocItems[idx];
+                if (item) {
+                    const isCurrent = heading.id === activeHeadingId;
+                    item.classList.toggle('active', isCurrent);
+                }
+            });
+        }
+    }, {
+        rootMargin: '-85px 0px -55% 0px',
+        threshold: 0
+    });
+    
+    headings.forEach(h => observer.observe(h));
+}
+
+// Setup Lightbox for image Zooming
+function setupLightbox() {
+    const images = contentArea.querySelectorAll('img');
+    images.forEach(img => {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', () => {
+            const lightboxOverlay = document.getElementById('lightboxOverlay');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            if (!lightboxOverlay || !lightboxImage || !lightboxCaption) return;
+
+            lightboxImage.src = img.src;
+            lightboxImage.alt = img.alt || '';
+            lightboxCaption.textContent = img.alt || img.title || 'Image Preview';
+            
+            lightboxOverlay.classList.add('active');
+        });
+    });
+}
+
+function closeLightbox() {
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    if (lightboxOverlay) {
+        lightboxOverlay.classList.remove('active');
+    }
+}
+
+// Asynchronously load and cache file contents for context search
+async function indexAllFiles() {
+    setTimeout(async () => {
+        for (const file of allFiles) {
+            if (file.type !== 'file') continue;
+            try {
+                let content = fileContents[file.path];
+                if (!content) {
+                    const response = await fetch(file.path);
+                    if (response.ok) {
+                        content = await response.text();
+                        fileContents[file.path] = content;
+                    }
+                }
+                
+                if (content) {
+                    const existingIndex = searchIndex.findIndex(item => item.path === file.path);
+                    const indexedData = {
+                        name: file.name,
+                        path: file.path,
+                        content: content,
+                        lowerContent: content.toLowerCase()
+                    };
+                    if (existingIndex > -1) {
+                        searchIndex[existingIndex] = indexedData;
+                    } else {
+                        searchIndex.push(indexedData);
+                    }
+                }
+            } catch (e) {
+                console.warn(`Could not index ${file.path}:`, e);
+            }
+            await new Promise(r => setTimeout(r, 60));
+        }
+    }, 1200);
+}
+
+// Extract context snippets for search results
+function getContextSnippet(content, query, maxLen = 80) {
+    if (!content) return '';
+    const lowerContent = content.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    const idx = lowerContent.indexOf(lowerQuery);
+    if (idx === -1) {
+        return content.length > maxLen ? content.substring(0, maxLen) + '...' : content;
+    }
+    
+    let start = Math.max(0, idx - Math.floor(maxLen / 2));
+    let end = Math.min(content.length, idx + lowerQuery.length + Math.floor(maxLen / 2));
+    
+    let snippet = content.substring(start, end);
+    if (start > 0) snippet = '...' + snippet;
+    if (end < content.length) snippet = snippet + '...';
+    return snippet;
+}
+
+// Theme Switcher Picker bindings
+function setupThemePicker() {
+    const themePickerBtn = document.getElementById('themePickerBtn');
+    const themeDropdown = document.getElementById('themeDropdown');
+    if (!themePickerBtn || !themeDropdown) return;
+
+    themePickerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = themeDropdown.classList.toggle('active');
+        themePickerBtn.setAttribute('aria-expanded', isOpen.toString());
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!themeDropdown.contains(e.target) && e.target !== themePickerBtn) {
+            themeDropdown.classList.remove('active');
+            themePickerBtn.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    const themeOptions = themeDropdown.querySelectorAll('.theme-option-btn');
+    themeOptions.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const theme = btn.dataset.theme;
+            if (theme) {
+                setTheme(theme);
+            }
+            themeDropdown.classList.remove('active');
+            themePickerBtn.setAttribute('aria-expanded', 'false');
+        });
+    });
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    
+    const themeDropdown = document.getElementById('themeDropdown');
+    if (themeDropdown) {
+        const themeOptions = themeDropdown.querySelectorAll('.theme-option-btn');
+        themeOptions.forEach(btn => {
+            if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+}
+
+// Accessibility sizers (font controls)
+function setupFontControls() {
+    const fontDecreaseBtn = document.getElementById('fontDecreaseBtn');
+    const fontIncreaseBtn = document.getElementById('fontIncreaseBtn');
+    if (!fontDecreaseBtn || !fontIncreaseBtn) return;
+
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize) {
+        rootFontSize = parseFloat(savedFontSize);
+        contentArea.style.fontSize = `${rootFontSize}rem`;
+    }
+
+    fontDecreaseBtn.addEventListener('click', () => {
+        if (rootFontSize > 0.85) {
+            rootFontSize = parseFloat((rootFontSize - 0.05).toFixed(2));
+            contentArea.style.fontSize = `${rootFontSize}rem`;
+            localStorage.setItem('fontSize', rootFontSize.toString());
+        }
+    });
+
+    fontIncreaseBtn.addEventListener('click', () => {
+        if (rootFontSize < 1.4) {
+            rootFontSize = parseFloat((rootFontSize + 0.05).toFixed(2));
+            contentArea.style.fontSize = `${rootFontSize}rem`;
+            localStorage.setItem('fontSize', rootFontSize.toString());
+        }
+    });
+}
+
+// Share note copy link button action
+function setupShareLink() {
+    const shareLinkBtn = document.getElementById('shareLinkBtn');
+    if (!shareLinkBtn) return;
+    
+    shareLinkBtn.addEventListener('click', async () => {
+        const url = window.location.href;
+        try {
+            await copyToClipboard(url);
+            
+            const originalHtml = shareLinkBtn.innerHTML;
+            shareLinkBtn.innerHTML = `
+                <svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                </svg>
+            `;
+            shareLinkBtn.classList.add('active');
+            
+            setTimeout(() => {
+                shareLinkBtn.innerHTML = originalHtml;
+                shareLinkBtn.classList.remove('active');
+            }, 2000);
+        } catch (e) {
+            console.error('Failed to copy share link:', e);
+        }
+    });
+}
+
+// Recursive sidebar folder/file visual tree filter
+function filterSidebarTree(query) {
+    const trimmed = query.trim().toLowerCase();
+    
+    if (!trimmed) {
+        document.querySelectorAll('.tree-folder').forEach(folder => {
+            folder.style.display = '';
+            folder.classList.remove('filtered-open');
+        });
+        document.querySelectorAll('.tree-item').forEach(item => {
+            item.style.display = '';
+        });
+        
+        const activeItem = document.querySelector('.tree-item.active');
+        if (activeItem) {
+            let parent = activeItem.parentElement;
+            while (parent) {
+                if (parent.classList.contains('tree-folder')) {
+                    parent.classList.add('open');
+                    const header = parent.querySelector('.tree-header');
+                    if (header) header.setAttribute('aria-expanded', 'true');
+                }
+                parent = parent.parentElement;
+            }
+        }
+        return;
+    }
+
+    const allFolders = Array.from(document.querySelectorAll('.tree-folder'));
+    
+    const foldersSorted = allFolders.sort((a, b) => {
+        const depthA = getElementDepth(a);
+        const depthB = getElementDepth(b);
+        return depthB - depthA;
+    });
+
+    function getElementDepth(el) {
+        let depth = 0;
+        let parent = el.parentElement;
+        while (parent) {
+            if (parent.classList.contains('tree-folder')) depth++;
+            parent = parent.parentElement;
+        }
+        return depth;
+    }
+
+    document.querySelectorAll('.tree-item:not(.tree-header)').forEach(fileItem => {
+        const text = fileItem.textContent.trim().toLowerCase();
+        if (text.includes(trimmed)) {
+            fileItem.style.display = 'flex';
+        } else {
+            fileItem.style.display = 'none';
+        }
+    });
+
+    foldersSorted.forEach(folder => {
+        const header = folder.querySelector('.tree-header');
+        const folderName = header ? header.textContent.trim().toLowerCase() : '';
+        const folderMatches = folderName.includes(trimmed);
+
+        const childrenContainer = folder.querySelector('.tree-children');
+        let hasVisibleChildren = false;
+        
+        if (childrenContainer) {
+            const childFiles = Array.from(childrenContainer.children).filter(c => c.classList.contains('tree-item') && !c.classList.contains('tree-header'));
+            const hasVisibleChildFiles = childFiles.some(f => f.style.display !== 'none');
+            
+            const childFolders = Array.from(childrenContainer.children).filter(c => c.classList.contains('tree-folder'));
+            const hasVisibleChildFolders = childFolders.some(f => f.style.display !== 'none');
+            
+            hasVisibleChildren = hasVisibleChildFiles || hasVisibleChildFolders;
+        }
+
+        if (folderMatches || hasVisibleChildren) {
+            folder.style.display = '';
+            if (header) {
+                header.style.display = 'flex';
+            }
+            if (hasVisibleChildren) {
+                folder.classList.add('open');
+                if (header) header.setAttribute('aria-expanded', 'true');
+            }
+        } else {
+            folder.style.display = 'none';
+            if (header) {
+                header.style.display = 'none';
+            }
+        }
+    });
+}
+
 // Initialize
 function init() {
     // Flatten tree for search
@@ -959,7 +1481,8 @@ function init() {
         // Check if it's a folder header
         if (item.classList.contains('tree-header')) {
             const folder = item.closest('.tree-folder');
-            folder.classList.toggle('open');
+            const isOpen = folder.classList.toggle('open');
+            item.setAttribute('aria-expanded', isOpen.toString());
             return;
         }
 
@@ -975,10 +1498,28 @@ function init() {
         }
     });
 
+    fileTreeEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const item = e.target.closest('.tree-item');
+            if (!item) return;
+            e.preventDefault();
+            item.click();
+        }
+    });
+
     // Command Palette Triggers
     searchTriggerBtn.addEventListener('click', openCommandPalette);
     
     document.addEventListener('keydown', (e) => {
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        if (lightboxOverlay && lightboxOverlay.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeLightbox();
+                return;
+            }
+        }
+
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
             if (cmdOverlay.classList.contains('hidden')) {
@@ -988,7 +1529,6 @@ function init() {
             }
         }
         
-        // Command palette navigation
         if (!cmdOverlay.classList.contains('hidden')) {
             if (e.key === 'Escape') {
                 closeCommandPalette();
@@ -1059,12 +1599,18 @@ function init() {
         tocToggleBtn.addEventListener('click', toggleToc);
     }
 
-    // Restore sidebar state from localStorage
-    if (localStorage.getItem('sidebarCollapsed') === 'true') {
+    // Restore sidebar state from localStorage (default to open)
+    const sidebarCollapsed = localStorage.getItem('sidebarCollapsed');
+    if (sidebarCollapsed === 'true') {
         sidebar.classList.add('collapsed');
         document.querySelector('.main-content').classList.add('expanded');
+    } else {
+        // Ensure sidebar is visible by default
+        sidebar.classList.remove('collapsed');
+        document.querySelector('.main-content').classList.remove('expanded');
     }
-    if (localStorage.getItem('tocCollapsed') === 'true') {
+    const tocCollapsed = localStorage.getItem('tocCollapsed');
+    if (tocCollapsed === 'true') {
         const tocSidebar = document.getElementById('tocSidebar');
         if (tocSidebar) tocSidebar.classList.add('collapsed');
     }
@@ -1083,6 +1629,40 @@ function init() {
     scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Tree Search Filtering
+    const treeSearchInput = document.getElementById('treeSearchInput');
+    if (treeSearchInput) {
+        treeSearchInput.addEventListener('input', (e) => {
+            filterSidebarTree(e.target.value);
+        });
+    }
+
+    // Lightbox close overlay click
+    const lOverlay = document.getElementById('lightboxOverlay');
+    if (lOverlay) {
+        lOverlay.addEventListener('click', (e) => {
+            if (e.target === lOverlay || e.target.id === 'lightboxOverlay') {
+                closeLightbox();
+            }
+        });
+    }
+
+    // Theme Selector
+    setupThemePicker();
+
+    // Restore saved theme on startup
+    const savedTheme = localStorage.getItem('theme') || 'slate';
+    setTheme(savedTheme);
+
+    // Font Controls
+    setupFontControls();
+
+    // Share link
+    setupShareLink();
+
+    // Background indexing of all files
+    indexAllFiles();
 
     // Hash-based routing: restore from URL or load default
     const hashData = getPathFromHash();
