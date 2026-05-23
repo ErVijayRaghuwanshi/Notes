@@ -1185,3 +1185,23 @@ header {
 .markdown-body img:hover {
     transform: scale(1.015);
 }
+
+/* Premium Mermaid Diagram Scaling & Aesthetics */
+.mermaid, .language-mermaid {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+    padding: 1.5rem 0 !important;
+    margin: 1rem 0 !important;
+}
+
+.mermaid svg, .language-mermaid svg {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+}

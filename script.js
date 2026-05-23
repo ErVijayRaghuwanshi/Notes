@@ -14,7 +14,15 @@ const fileTree = {
                     type: 'folder',
                     children: [
                         { name: 'bfs-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/bfs-notes.md' },
+                        { name: 'binary-search-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/binary-search-notes.md' },
                         { name: 'dfs-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/dfs-notes.md' }
+                    ]
+                },
+                {
+                    name: 'data-structures',
+                    type: 'folder',
+                    children: [
+                        { name: 'binary-search-tree-notes.md', type: 'file', path: '01-computer-science-fundamentals/data-structures/binary-search-tree-notes.md' }
                     ]
                 },
                 {
@@ -251,6 +259,7 @@ const fileTree = {
                 {
                     name: '15-case-studies', type: 'folder', children: [
                         { name: 'README.md', type: 'file', path: '04-system-design/15-case-studies/README.md' },
+                        { name: 'big-data-system-design.md', type: 'file', path: '04-system-design/15-case-studies/big-data-system-design.md' },
                         { name: 'chat-system.md', type: 'file', path: '04-system-design/15-case-studies/chat-system.md' },
                         { name: 'file-storage.md', type: 'file', path: '04-system-design/15-case-studies/file-storage.md' },
                         { name: 'news-feed.md', type: 'file', path: '04-system-design/15-case-studies/news-feed.md' },
@@ -939,12 +948,17 @@ function addCopyButtons() {
     contentArea.querySelectorAll('pre').forEach(pre => {
         if (pre.parentNode && pre.parentNode.classList.contains('code-block-wrapper')) return;
         
+        const codeEl = pre.querySelector('code');
+        if (codeEl && (codeEl.classList.contains('language-mermaid') || codeEl.classList.contains('mermaid'))) {
+            // Do not wrap Mermaid diagrams in the code block wrapper chrome
+            return;
+        }
+        
         const wrapper = document.createElement('div');
         wrapper.className = 'code-block-wrapper';
         pre.parentNode.insertBefore(wrapper, pre);
         wrapper.appendChild(pre);
 
-        const codeEl = pre.querySelector('code');
         if (!codeEl) return;
 
         let lang = 'CODE';

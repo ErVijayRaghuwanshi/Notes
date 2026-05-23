@@ -2,9 +2,6 @@
 
 Welcome to the **Software Development Engineer 2 (SDE2) Technical Knowledge Base**. This is a highly structured, single-page reference library meticulously compiled for backend engineers, big data developers, full-stack engineers, and DevOps/SRE specialists. It acts as a unified index pointing to core computer science fundamentals, backend engineering, distributed systems, cloud infrastructure, and interview preparations.
 
-> [!NOTE]
-> **Unified Section Directory**
-> This root document serves strictly as a high-level reference index. Use the navigation links below or search via the command palette to jump directly to specific sub-section hubs. Each sub-folder contains its own detailed README and comprehensive technical guides.
 
 ---
 
@@ -69,7 +66,7 @@ flowchart TD
 
 ## 📚 Detailed Category Hubs
 
-### [01-Computer Science Fundamentals](01-computer-science-fundamentals/)
+### [01-Computer Science Fundamentals](01-computer-science-fundamentals/README.md)
 Essential computer science patterns and guidelines for writing high-quality code.
 * **Design Patterns**: Clean architectures and SOLID principles illustrated with FastAPI examples.
 * **Regex Engine**: Detailed regular expressions 101 guide and Python `re` module patterns.

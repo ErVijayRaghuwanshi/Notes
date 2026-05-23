@@ -13,22 +13,23 @@
 - **[Regex 101](regex/regex-101.md)** - Comprehensive regex theory, syntax, and patterns
 - **[Python re Module](regex/python-re-module.md)** - Complete guide to Python's re module
 
-### Data Structures (Coming Soon)
-- Arrays & Strings
-- Linked Lists
-- Stacks & Queues
-- Trees & Binary Search Trees
-- Graphs
-- Hash Tables
-- Heaps & Priority Queues
+### Data Structures
+- **[Binary Search Tree](data-structures/binary-search-tree-notes.md)** - Hierarchical node-based tree structures and operations
+- Arrays & Strings *(coming soon)*
+- Linked Lists *(coming soon)*
+- Stacks & Queues *(coming soon)*
+- Graphs *(coming soon)*
+- Hash Tables *(coming soon)*
+- Heaps & Priority Queues *(coming soon)*
 
-### Algorithms (Coming Soon)
-- Sorting Algorithms
-- Searching Algorithms
-- Dynamic Programming
-- Greedy Algorithms
-- Graph Algorithms (BFS, DFS, Dijkstra)
-- Backtracking
+### Algorithms
+- **[Breadth-First Search](algorithms/bfs-notes.md)** - Level-order tree and graph traversal patterns
+- **[Depth-First Search](algorithms/dfs-notes.md)** - Stack-based search, recursion, and backtracking patterns
+- **[Binary Search](algorithms/binary-search-notes.md)** - High-efficiency $O(\log n)$ sorted search templates
+- Sorting Algorithms *(coming soon)*
+- Dynamic Programming *(coming soon)*
+- Greedy Algorithms *(coming soon)*
+- Backtracking *(coming soon)*
 
 ---
 

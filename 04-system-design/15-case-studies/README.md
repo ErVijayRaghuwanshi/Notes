@@ -15,6 +15,7 @@
 | 07 | [File Storage](file-storage.md) | Object storage, uploads, metadata, CDN, malware scanning |
 | 08 | [Video Streaming](video-streaming.md) | Ingest, transcoding, CDN, adaptive bitrate, DRM hooks |
 | 09 | [Ride-Hailing](ride-hailing.md) | Geo indexing, dispatch, realtime location, matching |
+| 10 | [Big Data System Design](big-data-system-design.md) | Lambda/Kappa, ingestion streams, partitioned storage, Liquid Clustering |
 
 ## How To Practice
 
