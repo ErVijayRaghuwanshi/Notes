@@ -23,6 +23,7 @@
 | 13 | [Trino and Interactive Querying](13-trino-and-interactive-querying/trino-and-interactive-querying-notes.md) | Distributed querying, connectors, lakehouse access, federation, trade-offs |
 | 14 | [Data Platform Architecture](14-data-platform-architecture/data-platform-architecture-notes.md) | Batch vs streaming, lambda vs kappa, lakehouse, governance, lineage |
 | 15 | Interview FAQ | [Scenario-based](15-interview-faq/scenario-based-questions.md) · [Behavioral](15-interview-faq/behavioral-questions.md) · [Technical](15-interview-faq/technical-questions.md) |
+| 16 | [Apache NiFi](16-nifi/nifi-notes.md) | FlowFiles, Processors, connections, backpressure, Content/FlowFile/Provenance repos |
 
 ---
 
@@ -31,7 +32,7 @@
 ```text
 Phase 1: Foundations            → Hadoop, HDFS, Spark Core
 Phase 2: Spark Performance      → Spark SQL, Optimization, Structured Streaming
-Phase 3: Messaging and Control  → Kafka, Airflow, Platform Operations
+Phase 3: Messaging and Control  → Kafka, Airflow, NiFi, Platform Operations
 Phase 4: Lakehouse Foundations  → Delta Lake, Hive Metastore, Iceberg and Hudi comparisons
 Phase 5: Query and Search       → Trino, Solr, Multi-engine data access patterns
 Phase 6: Interview Execution    → Platform Architecture, Scenario Q&A, Behavioral stories

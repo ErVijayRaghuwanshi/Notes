@@ -1205,3 +1205,42 @@ header {
     height: auto !important;
     display: block;
 }
+
+/* Premium Code Block Line Numbers Styling */
+.code-block-wrapper pre {
+    display: flex !important;
+    overflow-x: auto !important;
+    padding: 1rem !important; /* Force clean, consistent padding for numbers and code */
+}
+
+.line-numbers-container {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding-right: 0.8rem;
+    margin-right: 0.8rem;
+    border-right: 1px solid var(--border-color);
+    color: var(--text-muted);
+    opacity: 0.45;
+    user-select: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    min-width: 1.8rem;
+    line-height: 1.5; /* Strict alignment match */
+}
+
+.line-numbers-container span {
+    display: block;
+    line-height: 1.5;
+}
+
+.code-block-wrapper pre code {
+    flex-grow: 1;
+    display: block;
+    line-height: 1.5 !important; /* Forces strict match with numbers */
+    padding: 0 !important;
+    margin: 0 !important;
+    white-space: pre !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
+}

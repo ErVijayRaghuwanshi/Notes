@@ -15,7 +15,9 @@ const fileTree = {
                     children: [
                         { name: 'bfs-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/bfs-notes.md' },
                         { name: 'binary-search-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/binary-search-notes.md' },
-                        { name: 'dfs-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/dfs-notes.md' }
+                        { name: 'dfs-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/dfs-notes.md' },
+                        { name: 'dp-foundations-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/dp-foundations-notes.md' },
+                        { name: 'dp-patterns-notes.md', type: 'file', path: '01-computer-science-fundamentals/algorithms/dp-patterns-notes.md' }
                     ]
                 },
                 {
@@ -153,6 +155,11 @@ const fileTree = {
                         { name: 'behavioral-questions.md', type: 'file', path: '03-big-data-engineering/15-interview-faq/behavioral-questions.md' },
                         { name: 'scenario-based-questions.md', type: 'file', path: '03-big-data-engineering/15-interview-faq/scenario-based-questions.md' },
                         { name: 'technical-questions.md', type: 'file', path: '03-big-data-engineering/15-interview-faq/technical-questions.md' }
+                    ]
+                },
+                {
+                    name: '16-nifi', type: 'folder', children: [
+                        { name: 'nifi-notes.md', type: 'file', path: '03-big-data-engineering/16-nifi/nifi-notes.md' }
                     ]
                 },
                 {
@@ -598,8 +605,39 @@ function renderTree(node, depth = 0) {
     return '';
 }
 
+// Get clean title for dynamic SEO document.title updates
+function getCleanTitle(path) {
+    if (!path || path === 'README.md') return 'Home';
+    const parts = path.split('/');
+    const filename = parts[parts.length - 1];
+    let name = filename.replace(/\.md$/, '').replace(/-notes$/, '').replace(/_notes$/, '');
+    name = name.replace(/[-_]/g, ' ');
+    // Capitalize words beautifully, with target abbreviation mappings
+    return name.split(' ').map(word => {
+        const upper = word.toUpperCase();
+        if (upper === 'SCD') return 'SCD';
+        if (upper === 'BST') return 'BST';
+        if (upper === 'DP') return 'DP';
+        if (upper === 'CS') return 'CS';
+        if (upper === 'API') return 'API';
+        if (upper === 'LCS') return 'LCS';
+        if (upper === 'TSP') return 'TSP';
+        if (upper === 'SEO') return 'SEO';
+        if (upper === 'SDE2') return 'SDE2';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+}
+
 // Load markdown content
 async function loadContent(path, type = 'file') {
+    // Dynamically update document title for SEO & UX
+    try {
+        const cleanTitle = getCleanTitle(path);
+        document.title = `${cleanTitle} | SDE2 Technical Knowledge Base`;
+    } catch (e) {
+        console.error('Failed to set title:', e);
+    }
+
     contentArea.style.opacity = '0';
     contentArea.innerHTML = `
             <div class="text-center py-12">
@@ -960,6 +998,19 @@ function addCopyButtons() {
         wrapper.appendChild(pre);
 
         if (!codeEl) return;
+
+        // Generate line numbers
+        const lines = codeEl.textContent.split('\n');
+        const lineCount = codeEl.textContent.endsWith('\n') ? lines.length - 1 : lines.length;
+        
+        const lineNumbersContainer = document.createElement('div');
+        lineNumbersContainer.className = 'line-numbers-container';
+        for (let i = 1; i <= lineCount; i++) {
+            const lineNum = document.createElement('span');
+            lineNum.textContent = i;
+            lineNumbersContainer.appendChild(lineNum);
+        }
+        pre.insertBefore(lineNumbersContainer, codeEl);
 
         let lang = 'CODE';
         const classes = Array.from(codeEl.classList);

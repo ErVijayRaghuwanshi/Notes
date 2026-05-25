@@ -26,8 +26,9 @@
 - **[Breadth-First Search](algorithms/bfs-notes.md)** - Level-order tree and graph traversal patterns
 - **[Depth-First Search](algorithms/dfs-notes.md)** - Stack-based search, recursion, and backtracking patterns
 - **[Binary Search](algorithms/binary-search-notes.md)** - High-efficiency $O(\log n)$ sorted search templates
+- **[Dynamic Programming 101](algorithms/dp-foundations-notes.md)** - Top-Down/Bottom-Up DP foundations and core optimization steps
+- **[Advanced DP Patterns](algorithms/dp-patterns-notes.md)** - Knapsack, LCS, Interval, and Tree DP patterns with interview Q&As
 - Sorting Algorithms *(coming soon)*
-- Dynamic Programming *(coming soon)*
 - Greedy Algorithms *(coming soon)*
 - Backtracking *(coming soon)*
 
